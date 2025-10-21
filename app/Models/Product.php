@@ -1,0 +1,67 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Attachment;
+use App\Models\Category;
+
+class Product extends Model
+{
+    protected $table = 'product';
+
+    protected $fillable = [
+        'name', 'image', 'description', 'type', 'sku', 'category_id', 'qty',
+        'merchant_id', 'price', 'discount_price', 'discount_start', 
+        'discount_end', 'product_type', 'other_categories', 'visibility', 'deleted','is_approved'
+    ];
+
+    protected $casts = [
+        'other_categories' => 'array',
+    ];
+
+    protected $appends = ['is_wishlisted'];
+
+    public function otherCategories()
+    {
+        return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');
+    }
+
+    public function merchant()
+    {
+        return $this->belongsTo(Merchant::class, 'merchant_id');
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function wishlistedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'wishlists');
+    }
+
+    public function getIsWishlistedAttribute()
+    {
+        $user = Auth::user();
+        return $user ? $this->wishlistedByUsers()->where('user_id', $user->id)->exists() : false;
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class, 'file', 'id')
+                    ->where('attachmentable_type', 'products');
+    }
+
+    public function getImageAttribute($value)
+    {
+        if ($this->attachments->isNotEmpty()) {
+            return $this->attachments->map(function ($attachment) {
+                return env('FILES_CDN')."/uploads/" . $attachment->folder . '/' . $attachment->name;
+            })->toArray();
+        }
+        $image = env('FILES_CDN') . $value;
+        return $image ? [$image] : [];
+    }
+}

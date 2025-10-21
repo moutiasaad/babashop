@@ -1,0 +1,90 @@
+<?php
+use App\Http\Controllers\Api\AuthController; 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Driver\AuthDriverController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\MerchantController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\WishlistController;
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
+|
+*/
+Route::post('/register-phone', [AuthController::class, 'registerPhone']);
+Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
+Route::prefix('drivers')->group(function () {
+    Route::post('/register-phone', [AuthDriverController::class, 'registerPhone']);
+    Route::post('/verify-otp', [AuthDriverController::class, 'verifyOtp']);
+    Route::get('/status/{orderid}', [OrderDriverController::class, 'status']);
+});
+Route::post('/update-user-info', [AuthController::class, 'updateUserInfo']);
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::post('/update-user-info-manual', [AuthController::class, 'updateUserInfomations']);
+        Route::post('/destroy-account', [AuthController::class, 'destroyAccount']);
+    });
+Route::prefix('categories')->group(function () {
+    Route::get('/', [CategoryController::class, 'index']);  // List all categories (protected)
+    Route::get('/{category}', [CategoryController::class, 'show']);  // Show a specific category by ID (protected)
+    Route::get('/{category}/products', [CategoryController::class, 'getProductsByCategory']);  // Get all products in a category (protected)
+});
+Route::get('/rules', [MerchantController::class, 'getTermsAndConditionsHtml']);
+
+Route::prefix('merchants')->group(function () {
+    Route::get('/', [MerchantController::class, 'index']);
+    Route::get('/categories', [MerchantController::class, 'indexMerchantCategories']);
+    Route::get('/{merchant}', [MerchantController::class, 'show']);
+    // Route::get('/type/{type}', [MerchantController::class, 'getByType']);
+    Route::get('/search/{name}', [MerchantController::class, 'searchByName'])->name('merchants.search');
+    Route::get('/{merchant}/products', [MerchantController::class, 'getProductByMerchant']);
+    Route::get('/{merchant}/custom_products', [MerchantController::class, 'getProductCustomeByMerchant']);
+
+});
+Route::prefix('products')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('products.index');
+        Route::get('/{product}', [ProductController::class, 'show'])->name('products.show');
+        Route::get('/search/{name}', [ProductController::class, 'searchByName'])->name('products.search');
+    });
+Route::get('/notifyAbandonedCarts', [CartController::class, 'notifyAbandonedCarts']); // Add item to cart
+    Route::get('/notifyTomorrowBirthdays', [CartController::class, 'notifyTomorrowBirthdays']); // Add item to cart
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('cart')->group(function () {
+        Route::post('/', [CartController::class, 'addToCart']); // Add item to cart
+        Route::put('/{id}', [CartController::class, 'updateCartItem']); // Update cart item
+        Route::delete('/{id}', [CartController::class, 'removeFromCart']); // Remove item from cart
+        Route::get('/user/{userId}', [CartController::class, 'getUserCart']); // Get all items in a user's cart
+        // Route::get('/userMerchant/{userId}', [CartController::class, 'getUserCartGroupedByMerchant']); // Get all items in a user's cart
+    });
+    Route::prefix('orders')->group(function () {
+        Route::post('/', [OrderController::class, 'store']);
+        Route::get('/', [OrderController::class, 'index']);
+        Route::get('/{order}', [OrderController::class, 'show']);
+        Route::post('/update', [OrderController::class, 'orderUpdate']);
+        Route::post('/apply-coupon', [OrderController::class, 'validateCouponOnOrder']); // ← new
+        Route::delete('/{order}', [OrderController::class, 'destroy']);
+        Route::get('/status/{order}', [OrderController::class, 'getOrderStatus']);
+        Route::post("/makePayment", [MyFatoorahController::class , 'makePayment'])->name('makePayment');
+                Route::get('/getPriceByCoupon/{coupon}/{cart}', [OrderController::class, 'getPriceByCoupon']);
+
+
+
+    });
+    Route::prefix('wishlist')->group(function () {
+        Route::post('/{product}', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+        Route::get('/', [WishlistController::class, 'indexByUser'])->name('wishlist.index');
+        Route::delete('/{productId}', [WishlistController::class, 'removeFromWishlist']);
+    });
+
+});
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
