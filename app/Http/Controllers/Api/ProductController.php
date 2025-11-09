@@ -55,17 +55,15 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-     $product = $product->load('merchant','category');
-         $attributes = [];
+        // Eager-load relationships
+        $product->load('merchant', 'category');
 
-    $attributes['العنوان'] = $product->name;
-    $attributes['إسم المتجر'] = $product->merchant->brand_name;
-    $attributes['التصنيف'] = $product->category->name;
+        // Return clean JSON
+        return response()->json([
+            'data' => $product->toArray()
+        ], 200);
+    }
 
-
-    $product->attributes = $attributes;
-
-    return response()->json($product);    }
 
     public function searchByName($name, Request $request)
     {

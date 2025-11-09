@@ -11,6 +11,55 @@ use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
+    public function createGuestUser(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'phone' => 'nullable|string|max:20',
+            ]);
+
+            $phone = $validated['phone'] ?? 'guest_' . uniqid();
+
+            $user = User::firstOrCreate(
+                ['phone' => $phone],
+                ['fullname' => 'Guest', 'email' => null]
+            );
+
+            // Generate Sanctum token
+            $token = $user->createToken('guest_token')->plainTextToken;
+
+            return response()->json([
+                'message' => 'Guest user created successfully',
+                'user_id' => $user->id,
+                'token' => $token,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+    public function refreshToken(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'user_id' => 'required|exists:users,id',
+            ]);
+
+            $user = User::find($validated['user_id']);
+
+            // Invalidate old tokens (optional)
+            $user->tokens()->delete();
+
+            // Create new token
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'message' => 'Token refreshed successfully',
+                'token' => $token,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
 
     public function registerPhone(Request $request)
     {
@@ -216,26 +265,61 @@ class AuthController extends Controller
 
     public function updateUserInfo(Request $request)
     {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'fullname' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-        ]);
+        try {
+            $validated = $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'fullname' => 'required|string|max:255',
+                'email' => 'nullable|email|max:255',
+                'address' => 'nullable|string|max:255',
+                'phone' => 'nullable|string|max:20',
+                'birth_date' => 'nullable|date',
+                'longitude' => 'nullable|string|max:50',
+                'latitude' => 'nullable|string|max:50',
+                'fcm_token' => 'nullable|string|max:255',
+            ]);
 
-        // Update user's name and email
-        $user = User::find($validated['user_id']);
-        $user->update([
-            'fullname' => $validated['fullname'],
-            'email' => $validated['email'],
-        ]);
-        
-        if($request['birth_date']){
-            $user->birth_date = $request['birth_date'];
+            // ✅ Find user
+            $user = User::find($validated['user_id']);
+
+            // ✅ Update all fields
+            $user->fullname   = $validated['fullname'];
+            $user->email      = $validated['email'] ?? $user->email;
+            $user->address    = $validated['address'] ?? $user->address;
+            $user->phone      = $validated['phone'] ?? $user->phone;
+            $user->birth_date = $validated['birth_date'] ?? $user->birth_date;
+            $user->longitude  = $validated['longitude'] ?? $user->longitude;
+            $user->latitude   = $validated['latitude'] ?? $user->latitude;
+            $user->fcm_token  = $validated['fcm_token'] ?? $user->fcm_token;
+
             $user->save();
-        }
 
-        return response()->json(['message' => 'User info updated successfully' , 'redirect_to' => '/home', 'user' => $user]);
+            // ✅ Return complete user data (fresh from DB)
+            return response()->json([
+                'message' => 'User info updated successfully',
+                'redirect_to' => '/home',
+                'user' => [
+                    'id' => $user->id,
+                    'fullname' => $user->fullname,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'address' => $user->address,
+                    'birth_date' => $user->birth_date,
+                    'latitude' => $user->latitude,
+                    'longitude' => $user->longitude,
+                    'fcm_token' => $user->fcm_token,
+                    'is_verified' => $user->is_verified,
+                    'created_at' => $user->created_at,
+                    'updated_at' => $user->updated_at,
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error updating user info',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
+
     
       public function updateUserInfomations(Request $request)
     {

@@ -95,17 +95,18 @@ protected $appends = ['status_color','products'];
     public function getStatusAttribute($value)
     {
         $statuses = [
-            0 => 'بانتظار المراجعة',
-            1 => 'تم قبول الطلب',
-            2 => 'تحت التجهيز',
-            3 => 'تم الاستلام',
-            4 => 'ملغاة',
-            5 => 'مسترجعة',
-            6 => 'بإنتضار العنوان',
+            0 => 'En attente de révision',
+            1 => 'Commande acceptée',
+            2 => 'En préparation',
+            3 => 'Reçue',
+            4 => 'Annulée',
+            5 => 'Remboursée',
+            6 => 'En attente d’adresse',
         ];
-    
+
         return $statuses[$value] ?? '-';
     }
+
     
     public function getStatusColorAttribute()
     {

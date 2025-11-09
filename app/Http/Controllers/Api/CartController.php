@@ -178,7 +178,7 @@ public function notifyTomorrowBirthdays()
             'product_id' => 'required|exists:product,id',
             'user_id' => 'required|exists:users,id',
             'qte' => 'required|integer|min:1',
-            'card_description' => 'nullable',
+            // 'card_description' => 'nullable',
         ]);
 
         $validated['user_id'] = auth()->id() ?? $validated['user_id'] ;
@@ -187,7 +187,7 @@ public function notifyTomorrowBirthdays()
             ->where('product_id', $validated['product_id'])
             ->first();
             
-        $validated['card_description'] =json_encode($validated['card_description']);
+        // $validated['card_description'] =json_encode($validated['card_description']);
 
         if ($cartItem) {
         //   if ($cartItem->qte > 4) {
@@ -198,7 +198,7 @@ public function notifyTomorrowBirthdays()
 
             // If item exists, update the quantity
             $cartItem->qte += $validated['qte'];
-            $cartItem->card_description = json_encode($validated['card_description']);
+            // $cartItem->card_description = json_encode($validated['card_description']);
             $cartItem->save();
         } else {
             // Create new cart item
@@ -234,34 +234,68 @@ public function notifyTomorrowBirthdays()
     // Get all items in the cart for a specific user
     public function getUserCart($userId)
     {
-    // Retrieve cart items with their related product
-    $cartItems = Carts::where('user_id', $userId)
-        ->with('product')
-        ->get();
-    
-    // Calculate total price of all items (price × quantity)
-    $totalPrice = $cartItems->sum(function ($item) {
-        return ( $item->product->discount_price ?? $item->product->price ) * $item->qte;
-    });
-    $qty = $cartItems->sum('qte');
-    
-    // Static values (set these as needed)
-    $deliveryPrice     = config('company.delivery_cost'); // flat delivery fee
-    $restForDiscount   = 0;  // remaining amount eligible for discount
-    $restPercent       = 75;  // remaining discount percentage
-    // $qty       = 75;  // remaining discount percentage
-    $total = number_format($totalPrice + $deliveryPrice, 2, '.', '');
-    $totalPrice = number_format($totalPrice, 2, '.', '');
-    return response()->json([
-        'items'               => $cartItems,
-        'total_price'         => $totalPrice,
-        'total'               => $totalPrice,
-        'delivery_price'      => $deliveryPrice,
-        'rest_for_discount'   => $restForDiscount,
-        'qty'   => $qty,
-        'rest_percent'        => $restPercent,
-    ], 200);
+        try {
+            // 🔐 Verify the authenticated user matches the requested userId
+            // $authUser = auth()->user();
+            // if (!$authUser || $authUser->id != $userId) {
+            //     return response()->json([
+            //         'message' => 'Unauthorized access',
+            //     ], 403);
+            // }
+
+            // 🛒 Retrieve cart items safely with product relation
+            $cartItems = Carts::where('user_id', $userId)
+                ->with(['product' => function ($q) {
+                    $q->select('id', 'name', 'price', 'discount_price', 'description', 'image');
+                }])
+                ->get();
+
+            if ($cartItems->isEmpty()) {
+                return response()->json([
+                    'items' => [],
+                    'total_price' => "0.00",
+                    'total' => "0.00",
+                    'delivery_price' => config('company.delivery_cost') ?? 0,
+                    'rest_for_discount' => 0,
+                    'qty' => 0,
+                    'rest_percent' => 0,
+                ], 200);
+            }
+
+            // 💰 Calculate total safely
+            $totalPrice = 0;
+            foreach ($cartItems as $item) {
+                // avoid error if product is missing
+                if ($item->product) {
+                    $price = $item->product->discount_price ?? $item->product->price ?? 0;
+                    $totalPrice += $price * $item->qte;
+                }
+            }
+
+            $qty = $cartItems->sum('qte');
+            $deliveryPrice = config('company.delivery_cost') ?? 0;
+            $restForDiscount = 0;
+            $restPercent = 75;
+
+            return response()->json([
+                'items' => $cartItems,
+                'total_price' => number_format($totalPrice, 2, '.', ''),
+                'total' => number_format($totalPrice + $deliveryPrice, 2, '.', ''),
+                'delivery_price' => $deliveryPrice,
+                'rest_for_discount' => $restForDiscount,
+                'qty' => $qty,
+                'rest_percent' => $restPercent,
+            ], 200);
+        } catch (\Throwable $e) {
+            // 🧩 Catch all unexpected errors (instead of 500 crash)
+            return response()->json([
+                'message' => 'Error loading cart',
+                'error' => $e->getMessage(),
+                'trace' => app()->environment('local') ? $e->getTraceAsString() : null, // only show trace in local mode
+            ], 500);
+        }
     }
+
     
     public function getUserCartGroupedByMerchant($userId)
     {
@@ -270,7 +304,6 @@ public function notifyTomorrowBirthdays()
         // Log::info('User Merchant Cart logged in '.$userId);
 
         $cartItems = Carts::where('user_id', $userId)
-            ->with(['product.merchant'])
             ->get();
             
 

@@ -19,6 +19,8 @@ use App\Http\Controllers\Api\WishlistController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('/auth/create-guest', [AuthController::class, 'createGuestUser']);
+Route::post('/auth/refresh-token', [AuthController::class, 'refreshToken']);
 Route::post('/register-phone', [AuthController::class, 'registerPhone']);
 Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
 Route::prefix('drivers')->group(function () {
@@ -26,7 +28,7 @@ Route::prefix('drivers')->group(function () {
     Route::post('/verify-otp', [AuthDriverController::class, 'verifyOtp']);
     Route::get('/status/{orderid}', [OrderDriverController::class, 'status']);
 });
-Route::post('/update-user-info', [AuthController::class, 'updateUserInfo']);
+
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/update-user-info-manual', [AuthController::class, 'updateUserInfomations']);
         Route::post('/destroy-account', [AuthController::class, 'destroyAccount']);
@@ -54,15 +56,18 @@ Route::prefix('products')->group(function () {
         Route::get('/search/{name}', [ProductController::class, 'searchByName'])->name('products.search');
     });
 Route::get('/notifyAbandonedCarts', [CartController::class, 'notifyAbandonedCarts']); // Add item to cart
-    Route::get('/notifyTomorrowBirthdays', [CartController::class, 'notifyTomorrowBirthdays']); // Add item to cart
+    Route::get('/notifyTomorrowBirthdays', [CartController::class, 'notifyTomorrowBirthdays']);
+    
 Route::middleware('auth:sanctum')->group(function () {
+    //
+    Route::post('/update-user-info', [AuthController::class, 'updateUserInfo']);
     Route::prefix('cart')->group(function () {
         Route::post('/', [CartController::class, 'addToCart']); // Add item to cart
         Route::put('/{id}', [CartController::class, 'updateCartItem']); // Update cart item
         Route::delete('/{id}', [CartController::class, 'removeFromCart']); // Remove item from cart
         Route::get('/user/{userId}', [CartController::class, 'getUserCart']); // Get all items in a user's cart
         // Route::get('/userMerchant/{userId}', [CartController::class, 'getUserCartGroupedByMerchant']); // Get all items in a user's cart
-    });
+    }); // Add item to cart
     Route::prefix('orders')->group(function () {
         Route::post('/', [OrderController::class, 'store']);
         Route::get('/', [OrderController::class, 'index']);
