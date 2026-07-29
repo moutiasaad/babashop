@@ -17,3 +17,13 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+# Added by code-review-graph
+.code-review-graph/
+
+# Backups & DB dumps (never commit — use migrations for schema, OneDrive for backups)
+/*.sql
+/*.zip
+
+# Runtime user content (never commit — belongs on the server)
+/public/uploads/
+/public/invoice/
