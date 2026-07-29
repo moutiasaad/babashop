@@ -10,11 +10,20 @@ class Category extends Model
      use HasFactory;
      protected $table = 'category';
 
-    protected $fillable = ['name', 'image', 'merchant','order_item','visibility','deleted'];
+    protected $fillable = ['name', 'name_ar', 'image', 'merchant','order_item','visibility','deleted'];
+
+    protected $appends = ['localized_name'];
 
     public function getImageAttribute($value)
     {
         return env('FILES_CDN') . $value;
+    }
+
+    public function getLocalizedNameAttribute(): ?string
+    {
+        return app()->getLocale() === 'ar' && !empty($this->name_ar)
+            ? $this->name_ar
+            : $this->name;
     }
 
     public function products()

@@ -11,6 +11,7 @@ class Banner extends Model
 
     protected $fillable = [
         'name',
+        'name_ar',
         'image',
         'link',
         'order_item',
@@ -23,4 +24,13 @@ class Banner extends Model
         'deleted' => 'boolean',
         'order_item' => 'integer',
     ];
+
+    protected $appends = ['localized_name'];
+
+    public function getLocalizedNameAttribute(): ?string
+    {
+        return app()->getLocale() === 'ar' && !empty($this->name_ar)
+            ? $this->name_ar
+            : $this->name;
+    }
 }

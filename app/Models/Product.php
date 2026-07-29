@@ -15,8 +15,9 @@ class Product extends Model
     protected $table = 'product';
 
     protected $fillable = [
-        'name', 'image', 'description', 'type', 'sku', 'category_id', 'qty',
-        'merchant_id', 'price', 'discount_price', 'discount_start', 
+        'name', 'name_ar', 'image', 'description', 'description_ar',
+        'type', 'sku', 'category_id', 'qty',
+        'merchant_id', 'price', 'discount_price', 'discount_start',
         'discount_end', 'product_type', 'other_categories', 'visibility', 'deleted','is_approved'
     ];
 
@@ -24,7 +25,21 @@ class Product extends Model
         'other_categories' => 'array',
     ];
 
-    protected $appends = ['is_wishlisted'];
+    protected $appends = ['is_wishlisted', 'localized_name', 'localized_description'];
+
+    public function getLocalizedNameAttribute(): ?string
+    {
+        return app()->getLocale() === 'ar' && !empty($this->name_ar)
+            ? $this->name_ar
+            : $this->name;
+    }
+
+    public function getLocalizedDescriptionAttribute(): ?string
+    {
+        return app()->getLocale() === 'ar' && !empty($this->description_ar)
+            ? $this->description_ar
+            : $this->description;
+    }
 
     public function otherCategories()
     {
