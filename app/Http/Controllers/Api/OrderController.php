@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Carts;
 use App\Models\Coupon;
+use App\Models\DeliveryZone;
 use App\Models\Orders;
 use App\Models\Merchant;
 use App\Models\Order_lines;
@@ -20,10 +21,11 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'cart'     => 'required|array',
-            'address'  => 'required|string',
-            'phone'    => 'required|string',
-            'fullname' => 'required|string',
+            'cart'              => 'required|array',
+            'address'           => 'required|string',
+            'phone'             => 'required|string',
+            'fullname'          => 'required|string',
+            'delivery_zone_id'  => 'nullable|exists:delivery_zones,id',
         ]);
 
         $carts = Carts::whereIn('id', $request->cart)
@@ -34,30 +36,40 @@ class OrderController extends Controller
             return response()->json(['message' => 'Cart empty'], 400);
         }
 
-        $delivery_cost = config('company.delivery_cost') ?? 0;
+        // Delivery fee: prefer the per-governorate rate when a zone is supplied,
+        // otherwise fall back to the global company.delivery_cost config value.
+        $zone = null;
+        if ($request->filled('delivery_zone_id')) {
+            $zone = DeliveryZone::where('is_active', true)->find($request->delivery_zone_id);
+        }
+        $delivery_cost = $zone
+            ? (float) $zone->delivery_fee
+            : ((float) (config('company.delivery_cost') ?? 0));
 
-        $order = DB::transaction(function () use ($request, $carts, $delivery_cost) {
+        $order = DB::transaction(function () use ($request, $carts, $delivery_cost, $zone) {
             $order = Orders::create([
-                'user_id'             => auth()->id(),
-                'address'             => $request->address,
-                'order_type'          => $request->order_type,
-                'latitude'            => $request->latitude  ?? 24.71,
-                'longitude'           => $request->longitude ?? 46.70,
-                'phone'               => $request->phone,
-                'fullname'            => $request->fullname,
-                'merchant_id'         => $carts->first()->product->merchant_id,
-                'delivery_cost'       => $delivery_cost,
-                'is_rated'            => 2,
-                'status'              => 0,
-                'is_paid'             => 0,
-                'start_date_delivery' => $request->start_date_delivery ?? $carts->first()->preferred_delivery_start,
-                'end_date_delivery'   => $request->end_date_delivery   ?? $carts->first()->preferred_delivery_end,
-                'order_version'       => 3,
-                'client_note'         => $request->client_note,
-                'hide_buyer_identity' => $request->hide_buyer_identity ?? 0,
-                'designAttributeIds'  => $request->designAttributeIds ? json_encode($request->designAttributeIds) : null,
-                'designOptionIds'     => $request->designOptionIds  ? json_encode($request->designOptionIds)  : null,
-                'card_description'    => $carts->first()->card_description ? json_encode($carts->first()->card_description) : null,
+                'user_id'               => auth()->id(),
+                'address'               => $request->address,
+                'order_type'            => $request->order_type,
+                'latitude'              => $request->latitude  ?? 24.71,
+                'longitude'             => $request->longitude ?? 46.70,
+                'phone'                 => $request->phone,
+                'fullname'              => $request->fullname,
+                'merchant_id'           => $carts->first()->product->merchant_id,
+                'delivery_zone_id'      => $zone?->id,
+                'delivery_cost'         => $delivery_cost,
+                'delivery_fee_snapshot' => $delivery_cost,
+                'is_rated'              => 2,
+                'status'                => 0,
+                'is_paid'               => 0,
+                'start_date_delivery'   => $request->start_date_delivery ?? $carts->first()->preferred_delivery_start,
+                'end_date_delivery'     => $request->end_date_delivery   ?? $carts->first()->preferred_delivery_end,
+                'order_version'         => 3,
+                'client_note'           => $request->client_note,
+                'hide_buyer_identity'   => $request->hide_buyer_identity ?? 0,
+                'designAttributeIds'    => $request->designAttributeIds ? json_encode($request->designAttributeIds) : null,
+                'designOptionIds'       => $request->designOptionIds  ? json_encode($request->designOptionIds)  : null,
+                'card_description'      => $carts->first()->card_description ? json_encode($carts->first()->card_description) : null,
             ]);
 
             $total_price_order = 0;
@@ -89,11 +101,15 @@ class OrderController extends Controller
                     ->decrement('qty', $qty);
             }
 
-            // Free delivery check
+            // Free delivery: applied when either the merchant or the zone threshold is met.
             $merchant = Merchant::find($order->merchant_id);
-            if ($merchant && $merchant->price_free_delivery > 0 &&
-                $total_price_order > $merchant->price_free_delivery) {
+            $merchantFree = $merchant && $merchant->price_free_delivery > 0
+                && $total_price_order > $merchant->price_free_delivery;
+            $zoneFree = $zone && $zone->free_shipping_threshold !== null
+                && $total_price_order >= (float) $zone->free_shipping_threshold;
+            if ($merchantFree || $zoneFree) {
                 $order->delivery_cost = 0;
+                $order->delivery_fee_snapshot = 0;
             }
 
             $order->total_price     = $total_price_order;

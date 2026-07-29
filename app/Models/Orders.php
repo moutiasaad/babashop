@@ -44,7 +44,8 @@ class Orders extends Model
         'is_rated',
         'payment_note',
         'hide_buyer_identity',
-        
+        'delivery_zone_id',
+        'delivery_fee_snapshot',
     ];
 protected $appends = ['status_color','products'];
 
@@ -80,6 +81,11 @@ protected $appends = ['status_color','products'];
     public function merchant()
     {
         return $this->belongsTo(Merchant::class, 'merchant_id');
+    }
+
+    public function deliveryZone()
+    {
+        return $this->belongsTo(DeliveryZone::class, 'delivery_zone_id');
     }
 
     public function client()

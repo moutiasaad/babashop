@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\SupportController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\WishlistController;
+use App\Http\Controllers\Api\DeliveryZoneController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,6 +44,10 @@ Route::prefix('drivers')->group(function () {
     });
 // Banners — public read only (admin panel manages write)
 Route::get('/banners', [BannerController::class, 'index']);
+
+// Delivery zones — public read; app checkout uses this to render governorate picker + preview fees
+Route::get('/delivery-zones', [DeliveryZoneController::class, 'index']);
+Route::get('/delivery-zones/{deliveryZone}', [DeliveryZoneController::class, 'show']);
 
 // Support & account deletion — public
 Route::post('/support-request', [SupportController::class, 'store']);
