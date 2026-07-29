@@ -370,4 +370,33 @@ class AuthController extends Controller
 
     }
     }
+
+    public function getUserInfo(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'user_id' => 'required|exists:users,id',
+            ]);
+
+            $user = User::find($validated['user_id']);
+
+            return response()->json([
+                'success' => true,
+                'user' => [
+                    'id'         => $user->id,
+                    'fullname'   => $user->fullname,
+                    'email'      => $user->email,
+                    'phone'      => $user->phone,
+                    'address'    => $user->address,
+                    'longitude'  => $user->longitude,
+                    'latitude'   => $user->latitude,
+                    'birth_date' => $user->birth_date,
+                    'image'      => $user->image,
+                    'is_verified'=> $user->is_verified,
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
 }

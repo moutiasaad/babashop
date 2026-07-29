@@ -6,6 +6,10 @@ use App\Http\Controllers\Api\Driver\AuthDriverController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\MerchantController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\AccountDeletionController;
+use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\SupportController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\WishlistController;
@@ -33,6 +37,13 @@ Route::prefix('drivers')->group(function () {
         Route::post('/update-user-info-manual', [AuthController::class, 'updateUserInfomations']);
         Route::post('/destroy-account', [AuthController::class, 'destroyAccount']);
     });
+// Banners — public read only (admin panel manages write)
+Route::get('/banners', [BannerController::class, 'index']);
+
+// Support & account deletion — public
+Route::post('/support-request', [SupportController::class, 'store']);
+Route::post('/account-deletion-request', [AccountDeletionController::class, 'store']);
+
 Route::prefix('categories')->group(function () {
     Route::get('/', [CategoryController::class, 'index']);  // List all categories (protected)
     Route::get('/{category}', [CategoryController::class, 'show']);  // Show a specific category by ID (protected)
@@ -51,16 +62,32 @@ Route::prefix('merchants')->group(function () {
 
 });
 Route::prefix('products')->group(function () {
-        Route::get('/', [ProductController::class, 'index'])->name('products.index');
-        Route::get('/{product}', [ProductController::class, 'show'])->name('products.show');
-        Route::get('/search/{name}', [ProductController::class, 'searchByName'])->name('products.search');
+    Route::get('/', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/search/{name}', [ProductController::class, 'searchByName'])->name('products.search');
+    Route::get('/{product}', [ProductController::class, 'show'])->name('products.show');
+
+    // Reviews — public read, auth write/delete
+    Route::get('/{product}/reviews', [ReviewController::class, 'index']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/{product}/reviews', [ReviewController::class, 'store']);
+        Route::delete('/{product}/reviews', [ReviewController::class, 'destroy']);
     });
+
+    // Product options — public read, auth write
+    Route::get('/{product}/options', [ProductController::class, 'listOptions']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/{product}/options', [ProductController::class, 'storeOption']);
+        Route::put('/{product}/options/{option}', [ProductController::class, 'updateOption']);
+        Route::delete('/{product}/options/{option}', [ProductController::class, 'destroyOption']);
+    });
+});
 Route::get('/notifyAbandonedCarts', [CartController::class, 'notifyAbandonedCarts']); // Add item to cart
     Route::get('/notifyTomorrowBirthdays', [CartController::class, 'notifyTomorrowBirthdays']);
     
 Route::middleware('auth:sanctum')->group(function () {
     //
     Route::post('/update-user-info', [AuthController::class, 'updateUserInfo']);
+    Route::post('/auth/get-user-info', [AuthController::class, 'getUserInfo']);
     Route::prefix('cart')->group(function () {
         Route::post('/', [CartController::class, 'addToCart']); // Add item to cart
         Route::put('/{id}', [CartController::class, 'updateCartItem']); // Update cart item
@@ -71,6 +98,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('orders')->group(function () {
         Route::post('/', [OrderController::class, 'store']);
         Route::get('/', [OrderController::class, 'index']);
+        Route::get('/statuses', [OrderController::class, 'statuses']);
         Route::get('/{order}', [OrderController::class, 'show']);
         Route::post('/update', [OrderController::class, 'orderUpdate']);
         Route::post('/apply-coupon', [OrderController::class, 'validateCouponOnOrder']); // ← new
