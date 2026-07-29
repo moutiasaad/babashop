@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\Orders;
+use App\Models\Order;
 use App\Models\Product;
 
 class Admin extends Authenticatable
 {
-    protected $fillable = ['name', 'email', 'password', 'role_id', 'image'];
+    protected $fillable = ['name', 'title', 'email', 'password', 'role_id', 'image', 'merchant_id', 'phone'];
 
     public function role()
     {
@@ -22,7 +22,7 @@ class Admin extends Authenticatable
     
 public function getPendingOrdersCount()
 {
-    $query = Orders::where('status', 2);
+    $query = Order::where('status', 2);
 
     if (isset($this->merchant_id)) {
         $query->where('merchant_id', $this->merchant_id);
@@ -39,12 +39,12 @@ public function getPendingOrdersCount()
 
     public function hasPermission($permissionName)
     {
-
-        if ($this->role_id == 2) {
+        // Super Admin and Merchant both get full access
+        if ($this->role_id == 1 || $this->role_id == 2) {
             return true;
-        } else {
-            return $this->permissions->contains('name', $permissionName);
         }
+
+        return $this->permissions->contains('name', $permissionName);
     }
 
     // Method to check if the admin has a certain permission

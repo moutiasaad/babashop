@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "lovard-app",
+  "private_key_id": "74de2bd0f01fcf95358c99f3b7a9cacc7be7d591",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCkrVeHLjijJJi6\nkQpCxgdTsAvDitdXdQUAsYj1nPgZj5rC+Dy5leb+tPTCoPsAiPw/yaRGxDaEvj9S\ncNuElKUaWDnT78bRZbQMYr9WDGn8K2CKYOtBIfds7I0Jz1MoLs0VMcDJiEyhbOU9\nfTZkhByhgqyh/HzDrnrg7OHNgJx0bHltcktuHif42cEqQ+Il3vkydaO/uNq5x3ql\nNejNO+xgDmRjIpYlL9ngyOLk8ErUS0dOXohQm7G9488a24Wukkojgi2VvCeCtBmw\n0NTzjxHPZGsMRO7XbLlH0jUme5RD+P02xsV7dxW8RjmcTmHe9V73T0dVXOhx7tGr\nT7ruhffpAgMBAAECggEAHQZ1hTzbHDw81DNwzsynKXO/2w8rff2A7HqeRIZOf3jd\ngwxsbZyTiqTb+DsWCqXaaibRFu0KG/MJZ68/LdriT+apiKa8URefOMil51WIT7tY\niINlK8WAHhmCkW5SvqQjHx92Fr94nEI8lI4vil9zyW7mHSYK2pW0EFWIRierS+Sz\nTaTN4vBaOkN/XUw6SHvJy8BKs4OubZWIddwnEFRXkG9AxpzOGThVMkzQG6Gcu29H\nNZUey0TVIUPZkY3GWuXYpBYKsYAoG8o5+Q5lXfRVKH6SeLTRjviUK65kgTrrrGkB\nKoZqjpL4IbqY1Sv1hygSPe/tNnbfiErqsJKpH8S7VQKBgQDQw+jIprib/bBz7hnj\n6E/tgvvlKs0NBHO3/+r4pXp9HBVOxqUG0EooyuhqVpsWqiZ/a9LoZFRpfiSUSgpi\nxvyaXkKa0mgejTfpy6j2zmD9jDgasH9AVZcRpgd7vKVa/i0SbF4A0pz9xq7WhxB+\n+Rz2rtPJgu/Ldb0SAtqaxmNWTQKBgQDJ78LMmdv9DLEuJWg0tdHhXx/6WJwLHRXh\n/DoDdA5n7eTVrTXBatyEuwi/PkXcCqEB3TVHQT1W1zEyTr1s2Duli1AC6dPAti7G\nSr/t32BDQs7QD7pDJy7ZPdyPhjpmCGMPni1qkLeBTAYm4ROm6d2Vnv50gsHRHXMf\nKQox07vuDQKBgGc7KOXng0wnk1SQPZ80JinlZlf45TJ1rB8lXnSbp0ksVOECW2JW\nJwWq6GiE8OWxN540nDMsQY10wfPN9PrJOOnAiKD0QGYzIJ3shl2cyds2thuEgTg3\n2p7wgazPKNko7PK6QXWYr+bRk20jlqWi246j/rgbliX+z4KThLOaPE7VAoGBALd2\nGZ+y5Td4kXxgRdUlnuHHf5D9cf9y1E+0zKwYg4IOkslCjUUFJgV8u0ysceGg0niU\nFXSAJA9CgJK5EMXTihUzhWSwNU6u9b33aXneaGGTT7udnlamQZzi5ACNLX9HfWBS\nD+byRZW1kR0/fZA2hrcJdRo7NYUb4Vxc98MfH2z9AoGAAREo6BRS6dzbPdVRKhaK\n49sYwe7xo/ZwjNgaljPrkugfRZb9BDog/MSBJ9o7ZO6BtP5DZ3B+oEkxwnRQc5bQ\n7zIUU+QpFn0T6KUP9poibMo97l04tga91VELbri3ULCA8DJ42+DLkOxnjyGwpoKp\nNCWlnHT6EUp8ITyLbz3tnC0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@lovard-app.iam.gserviceaccount.com",
+  "client_id": "101485703958705949776",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40lovard-app.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
