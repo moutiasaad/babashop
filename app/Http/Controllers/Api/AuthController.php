@@ -507,8 +507,12 @@ class AuthController extends Controller
     public function verifyEmailOtp(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required|email|max:255',
-            'otp'   => 'required|digits:6',
+            'email'         => 'required|email|max:255',
+            'otp'           => 'required|digits:6',
+            // Optional: id of the guest user that had been browsing/carting
+            // prior to email verification. Used to migrate their cart to
+            // the newly created (or existing) real account.
+            'guest_user_id' => 'nullable|integer|exists:users,id',
         ]);
         $email = strtolower(trim($validated['email']));
 
@@ -556,6 +560,23 @@ class AuthController extends Controller
             $user->fcm_token   = $request->fcm_token ?? $user->fcm_token;
             $user->save();
 
+            // Migrate the guest's cart to the real account so the shopper
+            // doesn't lose what they just added right before signing in.
+            // Guarded: only if the guest_user_id is (a) different from the
+            // real user, and (b) actually a guest row (fullname = 'Guest',
+            // which is how createGuestUser marks them).
+            $guestUserId = $validated['guest_user_id'] ?? null;
+            if ($guestUserId && $guestUserId !== $user->id) {
+                $guest = User::find($guestUserId);
+                if ($guest && trim($guest->fullname) === 'Guest') {
+                    $this->migrateGuestCart($guest->id, $user->id);
+                    // Revoke the guest's Sanctum tokens so the old token
+                    // can't be reused. Keep the row for referential
+                    // integrity on any orders they might've placed as guest.
+                    $guest->tokens()->delete();
+                }
+            }
+
             $token = $user->createToken('auth_token')->plainTextToken;
 
             $redirectTo = $isNewUser ? '/register' : '/home';
@@ -592,6 +613,44 @@ class AuthController extends Controller
                 'success' => false,
                 'message' => 'Impossible de vérifier le code pour le moment. Réessayez.',
             ], 500);
+        }
+    }
+
+    /**
+     * Reassigns all cart rows from a guest user to a real user, merging
+     * quantities when the real user already has the same product in cart.
+     *
+     * Called at the boundary between "browse as guest" and "signed in with
+     * email" — without this, the shopper loses whatever they had in the
+     * cart the moment they log in.
+     */
+    protected function migrateGuestCart(int $guestUserId, int $realUserId): void
+    {
+        $guestRows = \DB::table('carts')->where('user_id', $guestUserId)->get();
+        foreach ($guestRows as $g) {
+            $existing = \DB::table('carts')
+                ->where('user_id', $realUserId)
+                ->where('product_id', $g->product_id)
+                ->first();
+
+            if ($existing) {
+                // Same product already there — merge quantities and drop
+                // the guest row.
+                \DB::table('carts')
+                    ->where('id', $existing->id)
+                    ->update([
+                        'qte'        => $existing->qte + $g->qte,
+                        'updated_at' => now(),
+                    ]);
+                \DB::table('carts')->where('id', $g->id)->delete();
+            } else {
+                \DB::table('carts')
+                    ->where('id', $g->id)
+                    ->update([
+                        'user_id'    => $realUserId,
+                        'updated_at' => now(),
+                    ]);
+            }
         }
     }
 
