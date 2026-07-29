@@ -16,7 +16,22 @@
       "Bash(php -l app/Http/Controllers/Admin/AdminCategoryController.php)",
       "Bash(php -l app/Http/Controllers/Admin/AdminMerchantController.php)",
       "Bash(php -l app/Http/Controllers/Api/ProductController.php)",
-      "Bash(php *)"
+      "Bash(php *)",
+      "Bash(/www/server/apache/bin/apachectl *)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(curl -sk -o /dev/null -w \"HTTP %{http_code}\\\\n\" --resolve babashop.store:443:127.0.0.1 https://babashop.store/)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" --resolve babashop.store:80:127.0.0.1 http://babashop.store/)",
+      "Bash(curl -sk -D - -o /dev/null --resolve babashop.store:443:127.0.0.1 https://babashop.store/)",
+      "Bash(composer --version)",
+      "Bash(/www/server/php/83/bin/php -v)",
+      "Bash(/www/server/php/83/bin/php /usr/bin/composer install --no-dev --optimize-autoloader --no-interaction)",
+      "Bash(chown -R www:www storage bootstrap/cache)",
+      "Bash(chmod -R ug+rwX storage bootstrap/cache)",
+      "Bash(curl -sk --resolve babashop.store:443:127.0.0.1 https://babashop.store/)",
+      "Bash(git config *)",
+      "Bash(git fetch *)",
+      "Bash(git rev-list *)",
+      "Bash(git pull *)"
     ]
   },
   "enableAllProjectMcpServers": true,
