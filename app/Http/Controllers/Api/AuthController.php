@@ -96,11 +96,12 @@ class AuthController extends Controller
         } else {
             // Generate new OTP
             $otp = rand(100000, 999999);
-         if($validated['phone'] == 123456789){
-            $otp = 111111;
-            //$phoneNumber = "+213798384870";
-            $phoneNumber = "+21650349573";
-        }
+
+            // Debug-only test phone: skip SMS and always return a known OTP.
+            // Never active outside APP_DEBUG=true.
+            if (config('app.debug') && $validated['phone'] == 123456789) {
+                $otp = 111111;
+            }
 
             // Create new OTP record
             Otp::updateOrCreate(
@@ -109,26 +110,35 @@ class AuthController extends Controller
             );
         }
 
-        $phoneNumber = "+966".$validated['phone'];
-        $reversedOtp = strrev($otp); // Reverse the OTP
+        $countryPrefix = config('services.authentica.country_prefix', '+216');
+        $phoneNumber   = $countryPrefix . $validated['phone'];
+        $reversedOtp   = strrev($otp);
 
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'X-Authorization' => '$2y$10$k71P673hjNKlemDc2CNey.DLjCEViMoZC4fNsHyXasKNUhF/ULiG.',
-        ])->post("https://api.authentica.sa/api/sdk/v1/sendOTP", [
-            'phone' => $phoneNumber,
-            'method' => 'sms',
-            'otp' => $reversedOtp,
-            'sender_name' => "LOVARD"
-        ]);
-                
+        // SMS delivery is optional — a missing AUTHENTICA_TOKEN disables it.
+        // Useful during initial deployment before an SMS provider is wired up.
+        $authenticaToken = config('services.authentica.token');
+        if (!empty($authenticaToken)) {
+            Http::withHeaders([
+                'Content-Type'    => 'application/json',
+                'X-Authorization' => $authenticaToken,
+            ])->post(config('services.authentica.endpoint'), [
+                'phone'       => $phoneNumber,
+                'method'      => 'sms',
+                'otp'         => $reversedOtp,
+                'sender_name' => config('services.authentica.sender', 'BABASHOP'),
+            ]);
+        }
 
-        // Return response with the user ID and OTP for testing (in production, send via SMS)
-        return response()->json([
+        $payload = [
             'message' => 'OTP sent',
-            'otp' => $otp,  // Remove this in production, only send it via SMS
             'user_id' => $user->id,
-        ]);
+        ];
+        // Only expose the OTP in the response when running in debug mode so
+        // tests and local dev still work without a real SMS provider.
+        if (config('app.debug')) {
+            $payload['otp'] = $otp;
+        }
+        return response()->json($payload);
     } catch (\Exception $e) {
         return response()->json(['message' => $e->getMessage()], 500);
 
@@ -153,7 +163,7 @@ class AuthController extends Controller
                 }
             }
             
-            $img = "https://lovardportal.online/uploads/categories/1746898074.jpg";
+            $img = config('services.placeholder.category_img', '');
             
             return response()->json([
                 'is_valid' => true,
@@ -167,7 +177,7 @@ class AuthController extends Controller
                 'is_valid' => true,
                 'token' => null,
                 'V' => $version,
-                'img' => "https://lovardportal.online/uploads/categories/1746898074.jpg"
+                'img' => config('services.placeholder.category_img', ''),
             ], 200);
         }
     }

@@ -16,15 +16,19 @@ class PushNotificationController extends Controller
     public function sendPushNotification(Request $request)
     {
         try {
-            // Set Firebase credentials
-            //$credentialsFilePath = "firebase_44/lovarddriverapp-firebase-adminsdk-fbsvc-fb7bc27406.json";
-            $credentialsFilePath = "firebase_54_12/fcm.json";
+            $projectId       = config('services.firebase.project_id');
+            $credentialsFile = public_path(config('services.firebase.credentials_path'));
+
+            // If FCM isn't configured, no-op — the app still works without push.
+            if (empty($projectId) || !file_exists($credentialsFile)) {
+                return response()->json(['success' => false, 'message' => 'FCM not configured'], 200);
+            }
+
             $client = new \Google_Client();
-            $client->setAuthConfig($credentialsFilePath);
+            $client->setAuthConfig($credentialsFile);
             $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
-    
-            // Firebase API URL
-            $apiurl = 'https://fcm.googleapis.com/v1/projects/lovard-app/messages:send';
+
+            $apiurl = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
     
             // Refresh token and get access token
             $client->refreshTokenWithAssertion();
@@ -121,15 +125,18 @@ class PushNotificationController extends Controller
     public function sendBulkPushNotification($request)
     {
         try {
-            // Set Firebase credentials
-            //$credentialsFilePath = public_path('"firebase_44/lovarddriverapp-firebase-adminsdk-fbsvc-fb7bc27406.json');
-            $credentialsFilePath = public_path('firebase_54_12/fcm.json');
+            $projectId       = config('services.firebase.project_id');
+            $credentialsFile = public_path(config('services.firebase.credentials_path'));
+
+            if (empty($projectId) || !file_exists($credentialsFile)) {
+                return ['success' => false, 'message' => 'FCM not configured'];
+            }
+
             $client = new \Google_Client();
-            $client->setAuthConfig($credentialsFilePath);
+            $client->setAuthConfig($credentialsFile);
             $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
-    
-            // Firebase API URL
-            $apiurl = 'https://fcm.googleapis.com/v1/projects/lovard-app/messages:send';
+
+            $apiurl = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
     
             // Refresh token and get access token
             $client->refreshTokenWithAssertion();
