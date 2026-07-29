@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Mail\OtpMail;
 use App\Models\Otp;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\RateLimiter;
 
 class AuthController extends Controller
 {
@@ -394,6 +398,155 @@ class AuthController extends Controller
                     'image'      => $user->image,
                     'is_verified'=> $user->is_verified,
                 ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Request an OTP delivered by email (alternate channel to SMS).
+     * Creates the user on first request. Rate limited to 3 requests / 15 min per email.
+     */
+    public function requestEmailOtp(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|max:255',
+        ]);
+        $email = strtolower(trim($validated['email']));
+
+        $rateKey = 'email-otp-request:' . $email;
+        if (RateLimiter::tooManyAttempts($rateKey, 3)) {
+            $seconds = RateLimiter::availableIn($rateKey);
+            return response()->json([
+                'success' => false,
+                'message' => 'Trop de demandes. Réessayez dans ' . $seconds . ' secondes.',
+            ], 429);
+        }
+        RateLimiter::hit($rateKey, 900); // 15 minutes
+
+        try {
+            // Find-or-create user by email so signup and login share this flow.
+            $user = User::firstOrCreate(
+                ['email' => $email],
+                ['fullname' => '']
+            );
+
+            // Invalidate any prior unused email OTPs for this address.
+            Otp::where('email', $email)
+                ->where('channel', 'email')
+                ->where('is_used', false)
+                ->update(['is_used' => true]);
+
+            $otp = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+            Otp::create([
+                'user_id'    => $user->id,
+                'email'      => $email,
+                'type'       => 'login',
+                'channel'    => 'email',
+                'otp'        => $otp,
+                'is_used'    => false,
+                'expires_at' => Carbon::now()->addMinutes(5),
+                'attempts'   => 0,
+            ]);
+
+            try {
+                Mail::to($email)->send(new OtpMail($otp, $user));
+            } catch (\Throwable $mailError) {
+                Log::error('Email OTP send failed', [
+                    'email' => $email,
+                    'error' => $mailError->getMessage(),
+                ]);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Impossible d\'envoyer l\'e-mail pour le moment. Réessayez plus tard.',
+                ], 503);
+            }
+
+            return response()->json([
+                'success'    => true,
+                'message'    => 'Code envoyé par e-mail.',
+                'user_id'    => $user->id,
+                'expires_in' => 300,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Verify an emailed OTP. On success, issues a Sanctum token like verifyOtp does for SMS.
+     */
+    public function verifyEmailOtp(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|max:255',
+            'otp'   => 'required|digits:6',
+        ]);
+        $email = strtolower(trim($validated['email']));
+
+        try {
+            $otpRecord = Otp::where('email', $email)
+                ->where('channel', 'email')
+                ->where('type', 'login')
+                ->where('is_used', false)
+                ->orderByDesc('id')
+                ->first();
+
+            if (!$otpRecord) {
+                return response()->json(['success' => false, 'message' => 'Code invalide ou expiré.'], 400);
+            }
+
+            if ($otpRecord->isExpired()) {
+                $otpRecord->update(['is_used' => true]);
+                return response()->json(['success' => false, 'message' => 'Code expiré. Demandez-en un nouveau.'], 400);
+            }
+
+            if ($otpRecord->attempts >= 5) {
+                $otpRecord->update(['is_used' => true]);
+                return response()->json(['success' => false, 'message' => 'Trop de tentatives. Demandez un nouveau code.'], 429);
+            }
+
+            if ((string) $otpRecord->otp !== (string) $validated['otp']) {
+                $otpRecord->increment('attempts');
+                return response()->json(['success' => false, 'message' => 'Code incorrect.'], 400);
+            }
+
+            $otpRecord->update(['is_used' => true]);
+
+            $user = User::find($otpRecord->user_id);
+            $user->is_verified = true;
+            $user->fcm_token   = $request->fcm_token ?? $user->fcm_token;
+            $user->save();
+
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            $redirectTo = ($user->fullname === '' || $user->fullname === null) ? '/update-profile' : '/home';
+
+            return response()->json([
+                'success'     => true,
+                'message'     => 'Vérification réussie.',
+                'token'       => $token,
+                'redirect_to' => $redirectTo,
+                'user' => [
+                    'id'          => $user->id,
+                    'fullname'    => $user->fullname,
+                    'email'       => $user->email,
+                    'phone'       => $user->phone,
+                    'fcm_token'   => $user->fcm_token,
+                    'address'     => $user->address,
+                    'longitude'   => $user->longitude,
+                    'latitude'    => $user->latitude,
+                    'birth_date'  => $user->birth_date,
+                    'image'       => $user->image,
+                    'is_verified' => $user->is_verified,
+                    'created_at'  => $user->created_at,
+                    'updated_at'  => $user->updated_at,
+                ],
             ]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);

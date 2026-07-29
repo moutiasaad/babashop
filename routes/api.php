@@ -27,6 +27,10 @@ Route::post('/auth/create-guest', [AuthController::class, 'createGuestUser']);
 Route::post('/auth/refresh-token', [AuthController::class, 'refreshToken']);
 Route::post('/register-phone', [AuthController::class, 'registerPhone']);
 Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
+
+// Email OTP — alternate channel to SMS
+Route::post('/auth/email/request-otp', [AuthController::class, 'requestEmailOtp']);
+Route::post('/auth/email/verify-otp', [AuthController::class, 'verifyEmailOtp']);
 Route::prefix('drivers')->group(function () {
     Route::post('/register-phone', [AuthDriverController::class, 'registerPhone']);
     Route::post('/verify-otp', [AuthDriverController::class, 'verifyOtp']);
