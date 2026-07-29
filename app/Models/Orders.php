@@ -94,35 +94,33 @@ protected $appends = ['status_color','products'];
 
     public function getStatusAttribute($value)
     {
+        // Aligned with admin dashboard "Modifier le statut" dropdown
         $statuses = [
-            0 => 'En attente de révision',
-            1 => 'Commande acceptée',
+            0 => 'En attente',
+            1 => 'Confirmée',
             2 => 'En préparation',
-            3 => 'Reçue',
-            4 => 'Annulée',
-            5 => 'Remboursée',
-            6 => 'En attente d’adresse',
+            3 => 'En livraison',
+            4 => 'Livrée',
+            5 => 'Annulée',
         ];
 
-        return $statuses[$value] ?? '-';
+        return $statuses[$value] ?? 'Inconnu';
     }
 
-    
     public function getStatusColorAttribute()
     {
+        // Aligned with admin dashboard getStatusBadge() colors
         $statusColors = [
-            0 => '#F0AD4E', // Yellow-ish
-            1 => '#5BC0DE', // Blue-ish
-            2 => '#0275D8', // Dark Blue
-            3 => '#5CB85C', // Green
-            4 => '#D9534F', // Red
-            5 => '#F7A35C', // Orange
-            5 => '#0275D8', // Orange
+            0 => '#6C757D', // bg-secondary – En attente
+            1 => '#17A2B8', // bg-info      – Confirmée
+            2 => '#0275D8', // bg-primary   – En préparation
+            3 => '#FF9800', // orange       – En livraison
+            4 => '#28A745', // bg-success   – Livrée
+            5 => '#DC3545', // bg-danger    – Annulée
         ];
-    
-        // Ensure we retrieve the raw status value as an integer.
+
         $rawStatus = isset($this->attributes['status']) ? (int)$this->attributes['status'] : null;
-        return $statusColors[$rawStatus] ?? '#000000';
+        return $statusColors[$rawStatus] ?? '#6C757D';
     }
 
     public function getDesignAttributes()

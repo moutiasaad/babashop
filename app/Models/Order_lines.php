@@ -16,6 +16,11 @@ class Order_lines extends Model
         'price',
         'qty',
         'card_description',
+        'selected_options',
+    ];
+
+    protected $casts = [
+        'selected_options' => 'array',
     ];
 
     public function product()

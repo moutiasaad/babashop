@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
-// In your controller
     public function store(Request $request)
     {
         $request->validate([
@@ -27,86 +26,84 @@ class OrderController extends Controller
             'fullname' => 'required|string',
         ]);
 
-        $carts         = Carts::whereIn('id', $request->cart)->get();
-        $coupon        = $this->getValidCoupon($request->coupon);
+        $carts = Carts::whereIn('id', $request->cart)
+            ->with('product')
+            ->get();
 
-        $delivery_cost = config('company.delivery_cost');
+        if ($carts->isEmpty()) {
+            return response()->json(['message' => 'Cart empty'], 400);
+        }
 
-        $order = Orders::create([
-            'user_id'             => auth()->id(),
-            'address'             => $request->address,
-            'order_type'             => $request->order_type,
-            'latitude'            => $request->latitude  ?? 24.71,
-            'longitude'           => $request->longitude ?? 46.70,
-            'phone'               => $request->phone,
-            'fullname'            => $request->fullname,
-            'merchant_id'         => $carts->first()->product->merchant_id,
-            'delivery_cost'       => $delivery_cost,
-            'is_rated'            => 2,
-            'status'              => 1,
-            'is_paid'             => 0,
-            'start_date_delivery' => $request->start_date_delivery ?? $carts->first()->preferred_delivery_start,
-            'end_date_delivery'   => $request->end_date_delivery   ?? $carts->first()->preferred_delivery_end,
-            'order_version'           => 3,
-            'client_note'         => $request->client_note,
-            'hide_buyer_identity' => $request->hide_buyer_identity ?? 0,
-            'designAttributeIds'  => $request->designAttributeIds ? json_encode($request->designAttributeIds) : null,
-            'designOptionIds'     => $request->designOptionIds  ? json_encode($request->designOptionIds)  : null,
-            'card_description'    => $carts->first()->card_description   ? json_encode($request->card_description)   : null,
-        ]);
-        $total_price_order=0;
+        $delivery_cost = config('company.delivery_cost') ?? 0;
 
-
-        foreach ($carts as $cart) {
-            $price          = $this->calculatePrice($cart->product, $coupon);
-            $discount_price = $coupon ? ($this->calculatePrice($cart->product, '') - $price) : 0;
-            $total_price_order += ($price ?? $discount_price ) * $cart->qte;
-            Order_lines::create([
-                'user_id'        => auth()->id(),
-                'order_id'       => $order->id,
-                'product_id'     => $cart->product_id,
-                'unit_price'     => $price,
-                'price' =>  $price ?? $discount_price,
-                'qty'            => $cart->qte,
-                'card_description'  => $cart->card_description ?? null,
+        $order = DB::transaction(function () use ($request, $carts, $delivery_cost) {
+            $order = Orders::create([
+                'user_id'             => auth()->id(),
+                'address'             => $request->address,
+                'order_type'          => $request->order_type,
+                'latitude'            => $request->latitude  ?? 24.71,
+                'longitude'           => $request->longitude ?? 46.70,
+                'phone'               => $request->phone,
+                'fullname'            => $request->fullname,
+                'merchant_id'         => $carts->first()->product->merchant_id,
+                'delivery_cost'       => $delivery_cost,
+                'is_rated'            => 2,
+                'status'              => 0,
+                'is_paid'             => 0,
+                'start_date_delivery' => $request->start_date_delivery ?? $carts->first()->preferred_delivery_start,
+                'end_date_delivery'   => $request->end_date_delivery   ?? $carts->first()->preferred_delivery_end,
+                'order_version'       => 3,
+                'client_note'         => $request->client_note,
+                'hide_buyer_identity' => $request->hide_buyer_identity ?? 0,
+                'designAttributeIds'  => $request->designAttributeIds ? json_encode($request->designAttributeIds) : null,
+                'designOptionIds'     => $request->designOptionIds  ? json_encode($request->designOptionIds)  : null,
+                'card_description'    => $carts->first()->card_description ? json_encode($carts->first()->card_description) : null,
             ]);
-        }
 
-        if ($coupon) {
-            $order->coupon_id = $coupon->id;
-        
-            if ($coupon->discount_type === 'percent') {
-                $discount = ($total_price_order * $coupon->discount) / 100;
-                $total_price_order -= $discount;
-            } elseif ($coupon->discount_type === 'fixed') {
-                $total_price_order -= $coupon->discount;
+            $total_price_order = 0;
+
+            foreach ($carts as $cart) {
+                $price = $cart->product->discount_price && (float)$cart->product->discount_price > 0
+                    ? (float)$cart->product->discount_price
+                    : (float)$cart->product->price;
+
+                $qty = max(1, (int)($cart->qte ?? 1));
+                $line_total = $price * $qty;
+                $total_price_order += $line_total;
+
+                Order_lines::create([
+                    'user_id'          => auth()->id(),
+                    'order_id'         => $order->id,
+                    'product_id'       => $cart->product_id,
+                    'unit_price'       => $price,
+                    'price'            => $line_total,
+                    'qty'              => $qty,
+                    'card_description' => $cart->card_description ?? null,
+                    'selected_options' => $cart->selected_options ?? null,
+                ]);
+
+                // Decrement product stock with lock to prevent overselling
+                \App\Models\Product::where('id', $cart->product_id)
+                    ->where('qty', '>=', $qty)
+                    ->lockForUpdate()
+                    ->decrement('qty', $qty);
             }
-        
-            // Optional: prevent negative total
-            if ($total_price_order < 0) {
-                $total_price_order = 0;
+
+            // Free delivery check
+            $merchant = Merchant::find($order->merchant_id);
+            if ($merchant && $merchant->price_free_delivery > 0 &&
+                $total_price_order > $merchant->price_free_delivery) {
+                $order->delivery_cost = 0;
             }
-        }
-        
 
-        $is_free_delivery = false;
-        $merchant = Merchant::where("id",$carts->first()->product->merchant_id)->first();
-        $merchantFreeDelivery = $merchant->price_free_delivery;
-        if($merchantFreeDelivery > 0 ){
-            $is_free_delivery = true;
-        }
+            $order->total_price     = $total_price_order;
+            $order->total_net_a_pay = $total_price_order + $delivery_cost;
+            $order->save();
 
-        if($total_price_order > $merchantFreeDelivery && $is_free_delivery){
-            $delivery_cost = 0 ;
-            $order->delivery_cost = $delivery_cost;
+            Carts::whereIn('id', $request->cart)->delete();
 
-        }
-        
-        $order->total_price    = $total_price_order;
-        $order->total_net_a_pay = $total_price_order + $delivery_cost;
-        $order->save();
-
-        Carts::whereIn('id', $request->cart)->delete();
+            return $order;
+        });
 
         return response()->json([
             'message' => 'Order created successfully',
@@ -235,11 +232,33 @@ public function validateCouponOnOrder(Request $request)
 }
     public function index()
     {
+        $userId = auth()->id();
+
+        if (!$userId) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
+
         $orders = Orders::with(['order_lines.product'])
+            ->where('user_id', $userId)
             ->orderBy('id', 'desc')
             ->get();
 
-        return response()->json($orders);
+        return response()->json($orders->map(fn($order) => array_merge(
+            $order->toArray(),
+            ['status' => $order->getRawOriginal('status')]
+        )));
+    }
+
+    public function statuses()
+    {
+        return response()->json([
+            ['value' => 0, 'label' => 'En attente',    'color' => '#6C757D'],
+            ['value' => 1, 'label' => 'Confirmée',      'color' => '#17A2B8'],
+            ['value' => 2, 'label' => 'En préparation', 'color' => '#0275D8'],
+            ['value' => 3, 'label' => 'En livraison',   'color' => '#FF9800'],
+            ['value' => 4, 'label' => 'Livrée',         'color' => '#28A745'],
+            ['value' => 5, 'label' => 'Annulée',        'color' => '#DC3545'],
+        ]);
     }
 
 
