@@ -26,7 +26,9 @@ class OrderController extends Controller
             'phone'             => 'required|string',
             'fullname'          => 'required|string',
             'delivery_zone_id'  => 'nullable|exists:delivery_zones,id',
+            'payment_method'    => 'nullable|in:cod,online',
         ]);
+        $paymentMethod = $request->input('payment_method', Orders::PAYMENT_METHOD_COD);
 
         $carts = Carts::whereIn('id', $request->cart)
             ->with('product')
@@ -46,7 +48,7 @@ class OrderController extends Controller
             ? (float) $zone->delivery_fee
             : ((float) (config('company.delivery_cost') ?? 0));
 
-        $order = DB::transaction(function () use ($request, $carts, $delivery_cost, $zone) {
+        $order = DB::transaction(function () use ($request, $carts, $delivery_cost, $zone, $paymentMethod) {
             $order = Orders::create([
                 'user_id'               => auth()->id(),
                 'address'               => $request->address,
@@ -62,6 +64,7 @@ class OrderController extends Controller
                 'is_rated'              => 2,
                 'status'                => 0,
                 'is_paid'               => 0,
+                'payment_method'        => $paymentMethod,
                 'start_date_delivery'   => $request->start_date_delivery ?? $carts->first()->preferred_delivery_start,
                 'end_date_delivery'     => $request->end_date_delivery   ?? $carts->first()->preferred_delivery_end,
                 'order_version'         => 3,
@@ -165,6 +168,38 @@ class OrderController extends Controller
         $order->payment_note = $request->payment_note ?? null;
         $order->save();
     return response()->json(['message' => 'Order updated successfully']);
+    }
+
+    /**
+     * Mark a COD order as paid. Called by driver/admin when cash is collected
+     * on delivery. No-op if the order is already paid or wasn't a COD order.
+     */
+    public function markPaid(Request $request, Orders $order)
+    {
+        if (!$order->isCod()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cette commande n\'est pas en paiement à la livraison.',
+            ], 422);
+        }
+
+        if ((int) $order->is_paid === 1) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Commande déjà marquée comme payée.',
+                'order'   => $order,
+            ]);
+        }
+
+        $order->is_paid = 1;
+        $order->paid_at = now();
+        $order->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Paiement enregistré.',
+            'order'   => $order,
+        ]);
     }
 
 public function validateCouponOnOrder(Request $request)

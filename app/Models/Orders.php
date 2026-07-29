@@ -46,6 +46,15 @@ class Orders extends Model
         'hide_buyer_identity',
         'delivery_zone_id',
         'delivery_fee_snapshot',
+        'payment_method',
+        'paid_at',
+    ];
+
+    public const PAYMENT_METHOD_COD    = 'cod';
+    public const PAYMENT_METHOD_ONLINE = 'online';
+
+    protected $casts = [
+        'paid_at' => 'datetime',
     ];
 protected $appends = ['status_color','products'];
 
@@ -86,6 +95,21 @@ protected $appends = ['status_color','products'];
     public function deliveryZone()
     {
         return $this->belongsTo(DeliveryZone::class, 'delivery_zone_id');
+    }
+
+    public function isCod(): bool
+    {
+        return $this->payment_method === self::PAYMENT_METHOD_COD;
+    }
+
+    public function scopeCod($query)
+    {
+        return $query->where('payment_method', self::PAYMENT_METHOD_COD);
+    }
+
+    public function scopeOnline($query)
+    {
+        return $query->where('payment_method', self::PAYMENT_METHOD_ONLINE);
     }
 
     public function client()

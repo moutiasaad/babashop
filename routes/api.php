@@ -111,6 +111,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{order}', [OrderController::class, 'show']);
         Route::post('/update', [OrderController::class, 'orderUpdate']);
         Route::post('/apply-coupon', [OrderController::class, 'validateCouponOnOrder']); // ← new
+        Route::post('/{order}/mark-paid', [OrderController::class, 'markPaid']);
         Route::delete('/{order}', [OrderController::class, 'destroy']);
         Route::get('/status/{order}', [OrderController::class, 'getOrderStatus']);
         Route::post("/makePayment", [MyFatoorahController::class , 'makePayment'])->name('makePayment');
