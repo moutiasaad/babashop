@@ -1,0 +1,577 @@
+{
+  "info": {
+    "name": "Babashop API",
+    "description": "Complete API collection for Babashop / ShaiebExpo — base URL and token are stored as collection variables.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://192.168.100.31:8000/api", "type": "string" },
+    { "key": "token",    "value": "",                              "type": "string" },
+    { "key": "user_id",  "value": "",                              "type": "string" },
+    { "key": "product_id", "value": "1",                           "type": "string" },
+    { "key": "order_id",   "value": "1",                           "type": "string" }
+  ],
+  "item": [
+
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Create Guest User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{base_url}}/auth/create-guest", "host": ["{{base_url}}"], "path": ["auth","create-guest"] }
+          }
+        },
+        {
+          "name": "Register Phone",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"123456789\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{base_url}}/register-phone", "host": ["{{base_url}}"], "path": ["register-phone"] }
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.token) { pm.collectionVariables.set('token', json.token); }",
+                  "if (json.user && json.user.id) { pm.collectionVariables.set('user_id', json.user.id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"user_id\": \"{{user_id}}\",\n  \"otp\": 111111\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{base_url}}/verify-otp", "host": ["{{base_url}}"], "path": ["verify-otp"] }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.token) { pm.collectionVariables.set('token', json.token); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"user_id\": \"{{user_id}}\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{base_url}}/auth/refresh-token", "host": ["{{base_url}}"], "path": ["auth","refresh-token"] }
+          }
+        },
+        {
+          "name": "Get Authenticated User",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/user", "host": ["{{base_url}}"], "path": ["user"] }
+          }
+        },
+        {
+          "name": "Update User Info",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{user_id}}\",\n  \"fullname\": \"Ahmed Benali\",\n  \"email\": \"ahmed@example.com\",\n  \"address\": \"Tunis, Tunisie\",\n  \"birth_date\": \"1995-06-15\",\n  \"latitude\": \"36.8190\",\n  \"longitude\": \"10.1658\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/update-user-info", "host": ["{{base_url}}"], "path": ["update-user-info"] }
+          }
+        },
+        {
+          "name": "Update User Info (with image)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "user_id",    "value": "{{user_id}}", "type": "text" },
+                { "key": "fullname",   "value": "Ahmed Benali","type": "text" },
+                { "key": "email",      "value": "ahmed@example.com", "type": "text" },
+                { "key": "birth_date", "value": "1995-06-15",  "type": "text" },
+                { "key": "image",      "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{base_url}}/update-user-info-manual", "host": ["{{base_url}}"], "path": ["update-user-info-manual"] }
+          }
+        },
+        {
+          "name": "Destroy Account",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{base_url}}/destroy-account", "host": ["{{base_url}}"], "path": ["destroy-account"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Banners",
+      "item": [
+        {
+          "name": "List Active Banners",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/banners", "host": ["{{base_url}}"], "path": ["banners"] }
+          }
+        },
+        {
+          "name": "Upload Banner",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "image", "type": "file", "src": "" },
+                { "key": "link",  "value": "https://example.com", "type": "text" },
+                { "key": "order", "value": "0", "type": "text" }
+              ]
+            },
+            "url": { "raw": "{{base_url}}/banners", "host": ["{{base_url}}"], "path": ["banners"] }
+          }
+        },
+        {
+          "name": "Update Banner",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"is_active\": true,\n  \"order\": 1,\n  \"link\": \"https://example.com\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{base_url}}/banners/1", "host": ["{{base_url}}"], "path": ["banners","1"] }
+          }
+        },
+        {
+          "name": "Delete Banner",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/banners/1", "host": ["{{base_url}}"], "path": ["banners","1"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "List All Categories",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/categories", "host": ["{{base_url}}"], "path": ["categories"] }
+          }
+        },
+        {
+          "name": "Get Category by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/categories/1", "host": ["{{base_url}}"], "path": ["categories","1"] }
+          }
+        },
+        {
+          "name": "Get Products by Category",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/categories/1/products", "host": ["{{base_url}}"], "path": ["categories","1","products"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Merchants",
+      "item": [
+        {
+          "name": "List All Merchants",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/merchants", "host": ["{{base_url}}"], "path": ["merchants"] }
+          }
+        },
+        {
+          "name": "List Merchant Categories",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/merchants/categories", "host": ["{{base_url}}"], "path": ["merchants","categories"] }
+          }
+        },
+        {
+          "name": "Get Merchant by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/merchants/1", "host": ["{{base_url}}"], "path": ["merchants","1"] }
+          }
+        },
+        {
+          "name": "Search Merchants by Name",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/merchants/search/shaieb", "host": ["{{base_url}}"], "path": ["merchants","search","shaieb"] }
+          }
+        },
+        {
+          "name": "Get Merchant Products",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/merchants/1/products", "host": ["{{base_url}}"], "path": ["merchants","1","products"] }
+          }
+        },
+        {
+          "name": "Get Merchant Custom Products",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/merchants/1/custom_products", "host": ["{{base_url}}"], "path": ["merchants","1","custom_products"] }
+          }
+        },
+        {
+          "name": "Get Terms & Conditions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/rules", "host": ["{{base_url}}"], "path": ["rules"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "List Products (home feed)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": {
+              "raw": "{{base_url}}/products?price=asc&userid={{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["products"],
+              "query": [
+                { "key": "price",  "value": "asc",        "description": "asc | desc | omit for random" },
+                { "key": "userid", "value": "{{user_id}}", "description": "optional zone filtering" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/products/{{product_id}}", "host": ["{{base_url}}"], "path": ["products","{{product_id}}"] }
+          }
+        },
+        {
+          "name": "Search Products by Name",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/products/search/shoes", "host": ["{{base_url}}"], "path": ["products","search","shoes"] }
+          }
+        },
+
+        {
+          "name": "Options",
+          "item": [
+            {
+              "name": "List Product Options",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept", "value": "application/json" }],
+                "url": { "raw": "{{base_url}}/products/{{product_id}}/options", "host": ["{{base_url}}"], "path": ["products","{{product_id}}","options"] }
+              }
+            },
+            {
+              "name": "Create Product Option",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"name\": \"Taille\",\n  \"values\": [\"XS\", \"S\", \"M\", \"L\", \"XL\", \"XXL\"]\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/products/{{product_id}}/options", "host": ["{{base_url}}"], "path": ["products","{{product_id}}","options"] }
+              }
+            },
+            {
+              "name": "Update Product Option",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"name\": \"Taille\",\n  \"values\": [\"S\", \"M\", \"L\", \"XL\"]\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/products/{{product_id}}/options/1", "host": ["{{base_url}}"], "path": ["products","{{product_id}}","options","1"] }
+              }
+            },
+            {
+              "name": "Delete Product Option",
+              "request": {
+                "method": "DELETE",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+                "url": { "raw": "{{base_url}}/products/{{product_id}}/options/1", "host": ["{{base_url}}"], "path": ["products","{{product_id}}","options","1"] }
+              }
+            }
+          ]
+        },
+
+        {
+          "name": "Reviews",
+          "item": [
+            {
+              "name": "List Product Reviews",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept", "value": "application/json" }],
+                "url": { "raw": "{{base_url}}/products/{{product_id}}/reviews", "host": ["{{base_url}}"], "path": ["products","{{product_id}}","reviews"] }
+              }
+            },
+            {
+              "name": "Submit / Update My Review",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{\n  \"rating\": 5,\n  \"comment\": \"Excellent produit, très satisfait !\"\n}", "options": { "raw": { "language": "json" } } },
+                "url": { "raw": "{{base_url}}/products/{{product_id}}/reviews", "host": ["{{base_url}}"], "path": ["products","{{product_id}}","reviews"] }
+              }
+            },
+            {
+              "name": "Delete My Review",
+              "request": {
+                "method": "DELETE",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+                "url": { "raw": "{{base_url}}/products/{{product_id}}/reviews", "host": ["{{base_url}}"], "path": ["products","{{product_id}}","reviews"] }
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Get User Cart",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/cart/user/{{user_id}}", "host": ["{{base_url}}"], "path": ["cart","user","{{user_id}}"] }
+          }
+        },
+        {
+          "name": "Add to Cart",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": {{product_id}},\n  \"user_id\": {{user_id}},\n  \"qte\": 1,\n  \"selected_options\": {\n    \"Taille\": \"L\",\n    \"Couleur\": \"Noir\"\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/cart", "host": ["{{base_url}}"], "path": ["cart"] }
+          }
+        },
+        {
+          "name": "Update Cart Item Quantity",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"qte\": 3\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{base_url}}/cart/1", "host": ["{{base_url}}"], "path": ["cart","1"] }
+          }
+        },
+        {
+          "name": "Remove Cart Item",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/cart/1", "host": ["{{base_url}}"], "path": ["cart","1"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cart\": [1, 2],\n  \"address\": \"Rue de la Liberté, Tunis\",\n  \"phone\": \"0612345678\",\n  \"fullname\": \"Ahmed Benali\",\n  \"client_note\": \"Livrer avant 18h\",\n  \"latitude\": \"36.8190\",\n  \"longitude\": \"10.1658\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/orders", "host": ["{{base_url}}"], "path": ["orders"] }
+          }
+        },
+        {
+          "name": "List My Orders",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/orders", "host": ["{{base_url}}"], "path": ["orders"] }
+          }
+        },
+        {
+          "name": "Get Order by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/orders/{{order_id}}", "host": ["{{base_url}}"], "path": ["orders","{{order_id}}"] }
+          }
+        },
+        {
+          "name": "Get Order Status",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/orders/status/{{order_id}}", "host": ["{{base_url}}"], "path": ["orders","status","{{order_id}}"] }
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"order_id\": {{order_id}},\n  \"status\": 2\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{base_url}}/orders/update", "host": ["{{base_url}}"], "path": ["orders","update"] }
+          }
+        },
+        {
+          "name": "Apply Coupon to Order",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"coupon_code\": \"SAVE10\",\n  \"order_id\": {{order_id}}\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{base_url}}/orders/apply-coupon", "host": ["{{base_url}}"], "path": ["orders","apply-coupon"] }
+          }
+        },
+        {
+          "name": "Get Price with Coupon",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/orders/getPriceByCoupon/SAVE10/1", "host": ["{{base_url}}"], "path": ["orders","getPriceByCoupon","SAVE10","1"] }
+          }
+        },
+        {
+          "name": "Delete Order",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/orders/{{order_id}}", "host": ["{{base_url}}"], "path": ["orders","{{order_id}}"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Wishlist",
+      "item": [
+        {
+          "name": "Get My Wishlist",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/wishlist", "host": ["{{base_url}}"], "path": ["wishlist"] }
+          }
+        },
+        {
+          "name": "Add to Wishlist",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/wishlist/{{product_id}}", "host": ["{{base_url}}"], "path": ["wishlist","{{product_id}}"] }
+          }
+        },
+        {
+          "name": "Remove from Wishlist",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/wishlist/{{product_id}}", "host": ["{{base_url}}"], "path": ["wishlist","{{product_id}}"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "Drivers",
+      "item": [
+        {
+          "name": "Driver — Register Phone",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"612345678\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{base_url}}/drivers/register-phone", "host": ["{{base_url}}"], "path": ["drivers","register-phone"] }
+          }
+        },
+        {
+          "name": "Driver — Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"user_id\": 1,\n  \"otp\": 111111\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{base_url}}/drivers/verify-otp", "host": ["{{base_url}}"], "path": ["drivers","verify-otp"] }
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "System / Cron",
+      "item": [
+        {
+          "name": "Notify Abandoned Carts",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/notifyAbandonedCarts", "host": ["{{base_url}}"], "path": ["notifyAbandonedCarts"] }
+          }
+        },
+        {
+          "name": "Notify Tomorrow Birthdays",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/notifyTomorrowBirthdays", "host": ["{{base_url}}"], "path": ["notifyTomorrowBirthdays"] }
+          }
+        }
+      ]
+    }
+
+  ]
+}

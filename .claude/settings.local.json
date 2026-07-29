@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__code-review-graph__semantic_search_nodes_tool",
+      "Bash(awk -F/ '{ *)",
+      "Bash(awk '{if\\(NF\\) {depth=gsub\\(/\\\\//,\"/\",$0\\); for\\(i=0;i<depth;i++\\) printf \"  \"; split\\($0,a,\"/\"\\); print \"├─ \" a[length\\(a\\)]}}')",
+      "Bash(php artisan *)",
+      "Bash(powershell -Command ' *)",
+      "Bash(sed -i 's|'\\\\''/uploads/products/\" \\\\. $fileName;|\"/uploads/products/\" . $fileName;|g' app/Http/Controllers/Admin/AdminProductController.php)",
+      "Bash(sed -i 's|'\\\\''/uploads/products/\" \\\\. $galleryFileName;|\"/uploads/products/\" . $galleryFileName;|g' app/Http/Controllers/Admin/AdminProductController.php)",
+      "Bash(sed -i 's|'\\\\''/uploads/banners/\" \\\\. $fileName;|\"/uploads/banners/\" . $fileName;|g' app/Http/Controllers/Admin/AdminBannerController.php)",
+      "Bash(sed -i 's|'\\\\''/uploads/categories/\" \\\\. $fileName;|\"/uploads/categories/\" . $fileName;|g' app/Http/Controllers/Admin/AdminCategoryController.php)",
+      "Bash(sed -i 's|'\\\\''/uploads/merchants/\" \\\\. $fileName;|\"/uploads/merchants/\" . $fileName;|g' app/Http/Controllers/Admin/AdminMerchantController.php)",
+      "Bash(php -l app/Http/Controllers/Admin/AdminProductController.php)",
+      "Bash(php -l app/Http/Controllers/Admin/AdminBannerController.php)",
+      "Bash(php -l app/Http/Controllers/Admin/AdminCategoryController.php)",
+      "Bash(php -l app/Http/Controllers/Admin/AdminMerchantController.php)",
+      "Bash(php -l app/Http/Controllers/Api/ProductController.php)",
+      "Bash(php *)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "code-review-graph"
+  ]
+}
