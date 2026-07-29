@@ -172,38 +172,53 @@ public function notifyTomorrowBirthdays()
 }    
     public function addToCart(Request $request)
     {
-        //Log::info('This is a simple log message from the controller.');
-
         $validated = $request->validate([
-            'product_id' => 'required|exists:product,id',
-            'user_id' => 'required|exists:users,id',
-            'qte' => 'required|integer|min:1',
-            // 'card_description' => 'nullable',
+            'product_id'       => 'required|exists:product,id',
+            'user_id'          => 'required|exists:users,id',
+            'qte'              => 'required|integer|min:1',
+            'selected_options' => 'nullable|array',
         ]);
 
-        $validated['user_id'] = auth()->id() ?? $validated['user_id'] ;
-        // Check if the item already exists in the cart for this user
-        $cartItem = Carts::where('user_id', $validated['user_id'])
-            ->where('product_id', $validated['product_id'])
-            ->first();
-            
-        // $validated['card_description'] =json_encode($validated['card_description']);
+        $validated['user_id'] = auth()->id() ?? $validated['user_id'];
+        $qte = $validated['qte'];
 
-        if ($cartItem) {
-        //   if ($cartItem->qte > 4) {
-        //     return response()->json([
-        //         'error' => "لا توجد كمية كافية من المنتج",
-        //     ], 200);
-        // }
-
-            // If item exists, update the quantity
-            $cartItem->qte += $validated['qte'];
-            // $cartItem->card_description = json_encode($validated['card_description']);
-            $cartItem->save();
-        } else {
-            // Create new cart item
-            $cartItem = Carts::create($validated);
+        // Canonicalise key order so {"Taille":"XL","Couleur":"Noir"} and
+        // {"Couleur":"Noir","Taille":"XL"} always produce the same JSON string.
+        if (!empty($validated['selected_options'])) {
+            ksort($validated['selected_options']);
         }
+
+        $errorResponse = null;
+        $cartItem = null;
+
+        DB::transaction(function () use ($validated, $qte, &$cartItem, &$errorResponse) {
+            $product = \App\Models\Product::lockForUpdate()->find($validated['product_id']);
+            $stock   = $product ? (int) $product->getRawOriginal('qty') : 0;
+
+            if ($stock < $qte) {
+                $errorResponse = response()->json([
+                    'error' => "Stock insuffisant (disponible: {$stock})",
+                ], 422);
+                return;
+            }
+
+            // Each distinct option combination is a separate cart line
+            $optionsJson = json_encode($validated['selected_options'] ?? null);
+            $cartItem = Carts::where('user_id', $validated['user_id'])
+                ->where('product_id', $validated['product_id'])
+                ->where('selected_options', $optionsJson)
+                ->first();
+
+            if ($cartItem) {
+                $cartItem->qte += $validated['qte'];
+                $cartItem->save();
+            } else {
+                $cartItem = Carts::create($validated);
+            }
+        });
+
+        if ($errorResponse) return $errorResponse;
+
         return response()->json($cartItem, 201);
     }
 

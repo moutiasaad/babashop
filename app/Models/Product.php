@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Attachment;
 use App\Models\Category;
+use App\Models\ProductImage;
+use App\Models\ProductOption;
+use App\Models\ProductVariant;
 
 class Product extends Model
 {
@@ -46,6 +49,21 @@ class Product extends Model
     {
         $user = Auth::user();
         return $user ? $this->wishlistedByUsers()->where('user_id', $user->id)->exists() : false;
+    }
+
+    public function options()
+    {
+        return $this->hasMany(ProductOption::class);
+    }
+
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class)->orderBy('sort_order');
     }
 
     public function attachments()

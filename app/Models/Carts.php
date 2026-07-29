@@ -9,8 +9,13 @@ class Carts extends Model
     protected $fillable = [
         'product_id',
         'user_id',
-        'qty',
-        'card_description'
+        'qte',
+        'card_description',
+        'selected_options',
+    ];
+
+    protected $casts = [
+        'selected_options' => 'array',
     ];
     protected $table = 'carts';
     public function product()
