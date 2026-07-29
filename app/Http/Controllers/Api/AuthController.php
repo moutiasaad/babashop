@@ -483,9 +483,14 @@ class AuthController extends Controller
                 'expires_in'  => 300,
             ]);
         } catch (\Exception $e) {
+            Log::error('Email OTP request failed', [
+                'email' => $email,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage(),
+                'message' => 'Impossible d\'envoyer le code pour le moment. Réessayez dans un instant.',
             ], 500);
         }
     }
@@ -578,7 +583,15 @@ class AuthController extends Controller
                 ],
             ]);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            Log::error('Email OTP verify failed', [
+                'email' => $email,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Impossible de vérifier le code pour le moment. Réessayez.',
+            ], 500);
         }
     }
 
