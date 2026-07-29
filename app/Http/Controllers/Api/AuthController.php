@@ -405,8 +405,13 @@ class AuthController extends Controller
     }
 
     /**
-     * Request an OTP delivered by email (alternate channel to SMS).
-     * Creates the user on first request. Rate limited to 3 requests / 15 min per email.
+     * Request an OTP delivered by email.
+     *
+     * Behavior:
+     * - Does NOT create a user record. Only stores an OTP keyed on the email.
+     * - Response includes `is_new_user` so the client can decide whether to
+     *   route to signup vs login after verify.
+     * - Rate limited to 3 requests / 15 min per email.
      */
     public function requestEmailOtp(Request $request)
     {
@@ -426,11 +431,8 @@ class AuthController extends Controller
         RateLimiter::hit($rateKey, 900); // 15 minutes
 
         try {
-            // Find-or-create user by email so signup and login share this flow.
-            $user = User::firstOrCreate(
-                ['email' => $email],
-                ['fullname' => '']
-            );
+            $existingUser = User::where('email', $email)->first();
+            $isNewUser    = $existingUser === null;
 
             // Invalidate any prior unused email OTPs for this address.
             Otp::where('email', $email)
@@ -441,7 +443,7 @@ class AuthController extends Controller
             $otp = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
 
             Otp::create([
-                'user_id'    => $user->id,
+                'user_id'    => $existingUser?->id,   // null for brand-new addresses
                 'email'      => $email,
                 'type'       => 'login',
                 'channel'    => 'email',
@@ -452,7 +454,7 @@ class AuthController extends Controller
             ]);
 
             try {
-                Mail::to($email)->send(new OtpMail($otp, $user));
+                Mail::to($email)->send(new OtpMail($otp, $existingUser));
             } catch (\Throwable $mailError) {
                 Log::error('Email OTP send failed', [
                     'email' => $email,
@@ -465,10 +467,10 @@ class AuthController extends Controller
             }
 
             return response()->json([
-                'success'    => true,
-                'message'    => 'Code envoyé par e-mail.',
-                'user_id'    => $user->id,
-                'expires_in' => 300,
+                'success'     => true,
+                'message'     => 'Code envoyé par e-mail.',
+                'is_new_user' => $isNewUser,
+                'expires_in'  => 300,
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -479,7 +481,13 @@ class AuthController extends Controller
     }
 
     /**
-     * Verify an emailed OTP. On success, issues a Sanctum token like verifyOtp does for SMS.
+     * Verify an emailed OTP.
+     *
+     * On success:
+     * - If no user exists for the email yet → create one with an empty
+     *   fullname. `is_new_user=true` tells the client to route to the
+     *   register/complete-profile step next.
+     * - If a user exists → just issue a fresh token, `is_new_user=false`.
      */
     public function verifyEmailOtp(Request $request)
     {
@@ -518,19 +526,30 @@ class AuthController extends Controller
 
             $otpRecord->update(['is_used' => true]);
 
-            $user = User::find($otpRecord->user_id);
+            // Find OR create — first-time verifiers get their account
+            // provisioned here, existing users just refresh their token.
+            $user = User::where('email', $email)->first();
+            $isNewUser = false;
+            if (!$user) {
+                $user = User::create([
+                    'email'    => $email,
+                    'fullname' => '',
+                ]);
+                $isNewUser = true;
+            }
             $user->is_verified = true;
             $user->fcm_token   = $request->fcm_token ?? $user->fcm_token;
             $user->save();
 
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            $redirectTo = ($user->fullname === '' || $user->fullname === null) ? '/update-profile' : '/home';
+            $redirectTo = $isNewUser ? '/register' : '/home';
 
             return response()->json([
                 'success'     => true,
                 'message'     => 'Vérification réussie.',
                 'token'       => $token,
+                'is_new_user' => $isNewUser,
                 'redirect_to' => $redirectTo,
                 'user' => [
                     'id'          => $user->id,
@@ -551,5 +570,19 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    /**
+     * Revoke the current Sanctum token so the token stored in the app is
+     * no longer accepted server-side.
+     * Route: POST /api/auth/logout (auth:sanctum).
+     */
+    public function logout(Request $request)
+    {
+        $token = $request->user()?->currentAccessToken();
+        if ($token) {
+            $token->delete();
+        }
+        return response()->json(['success' => true]);
     }
 }

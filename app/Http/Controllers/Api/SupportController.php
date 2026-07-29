@@ -15,12 +15,12 @@ class SupportController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:50',
-            'subject' => 'required|string|max:255',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|max:255',
+            'phone'    => 'nullable|string|max:50',
+            'subject'  => 'required|string|max:255',
             'order_id' => 'nullable|string|max:255',
-            'message' => 'required|string',
+            'message'  => 'required|string',
         ]);
 
         if ($validator->fails()) {

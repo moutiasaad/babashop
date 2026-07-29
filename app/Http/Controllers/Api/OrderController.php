@@ -340,9 +340,23 @@ public function validateCouponOnOrder(Request $request)
     // }
 
     public function show($id){
-        
-        $order = Orders::where('id',$id)->with('product')->with('client')->with('merchant');
-        return response()->json($order);
+        // Bug in older code: the ->with(...) chain was never terminated with
+        // a fetch, so `$order` was a query builder and the response was an
+        // opaque builder-object with no useful fields.
+        $order = Orders::with([
+                'product',
+                'client',
+                'merchant',
+                'deliveryZone',
+                'order_lines.product',
+            ])
+            ->find($id);
+
+        if (!$order) {
+            return response()->json(['message' => 'Commande introuvable.'], 404);
+        }
+
+        return response()->json(['order' => $order]);
     }
 
     public function getOrderStatus($id){

@@ -41,6 +41,7 @@ Route::prefix('drivers')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/update-user-info-manual', [AuthController::class, 'updateUserInfomations']);
         Route::post('/destroy-account', [AuthController::class, 'destroyAccount']);
+        Route::post('/auth/logout', [AuthController::class, 'logout']);
     });
 // Banners — public read only (admin panel manages write)
 Route::get('/banners', [BannerController::class, 'index']);

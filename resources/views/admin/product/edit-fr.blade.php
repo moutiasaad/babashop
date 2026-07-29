@@ -305,7 +305,8 @@
                                         {{-- Suggestions appear directly above the input, no gap --}}
                                         <div class="value-suggestions d-flex flex-wrap gap-1"></div>
                                         <div class="input-group input-group-sm mt-1">
-                                            <input type="text" class="form-control tag-input" placeholder="Ajouter une valeur…" autocomplete="off">
+                                            <input type="text" class="form-control tag-input" placeholder="Valeur (ex : 40, Rouge)…" autocomplete="off">
+                                            <input type="number" class="form-control tag-qty-input" min="0" value="1" placeholder="Qté" style="max-width:80px;">
                                             <button type="button" class="btn btn-outline-primary add-tag-btn">+ Ajouter</button>
                                         </div>
                                     </div>
@@ -326,7 +327,7 @@
 
                                 <p class="fs_12 text-muted mt-3 mb-0">
                                     <i class="fi fi-rr-info me-1"></i>
-                                    Appuyez sur <kbd>Entrée</kbd> ou cliquez <strong>+ Ajouter</strong> pour valider une valeur. Cliquez <strong>&times;</strong> sur un tag pour le retirer.
+                                    Saisissez la <strong>valeur</strong> (ex : <em>40</em>) et sa <strong>quantité</strong>, puis appuyez sur <kbd>Entrée</kbd> ou cliquez <strong>+ Ajouter</strong>. Chaque valeur a son propre stock. Cliquez sur un tag pour modifier sa quantité ou attacher une image ; cliquez <strong>&times;</strong> pour le retirer.
                                 </p>
                             </div>
                         </div>
@@ -529,7 +530,8 @@
             </div>
             <div class="value-suggestions d-flex flex-wrap gap-1"></div>
             <div class="input-group input-group-sm mt-1">
-                <input type="text" class="form-control tag-input" placeholder="Ajouter une valeur…" autocomplete="off">
+                <input type="text" class="form-control tag-input" placeholder="Valeur (ex : 40, Rouge)…" autocomplete="off">
+                <input type="number" class="form-control tag-qty-input" min="0" value="1" placeholder="Qté" style="max-width:80px;">
                 <button type="button" class="btn btn-outline-primary add-tag-btn">+ Ajouter</button>
             </div>
         </div>`;
@@ -545,15 +547,18 @@
         });
     }
 
-    function addTag(row, rawValue) {
+    function addTag(row, rawValue, rawQty) {
         const value = rawValue.trim();
         if (!value) return;
+        // Qty is set at add-time now (default 1). Admin can still click the
+        // tag later to open the detail panel and change qty or attach an image.
+        const qty = Math.max(0, parseInt(rawQty ?? 1) || 0);
         const display  = row.find('.tags-display');
         const optIndex = display.data('index');
-        // Prevent duplicates (check .val-qty-input siblings only within this option)
+        // Prevent duplicates
         const existing = display.find('[name*="[value]"]').map(function(){ return this.value; }).get();
         if (existing.includes(value)) return;
-        display.append(makeTagHtml(optIndex, value, 0, '', '', '', undefined));
+        display.append(makeTagHtml(optIndex, value, qty, '', '', '', undefined));
         renderSummaryTable();
     }
 
@@ -698,28 +703,31 @@
         });
 
         // ── Quick preset
+        // NEW BEHAVIOR: only creates the option ROW with the preset name
+        // (e.g. "Pointure"). The individual values (36, 37, 38, ...) become
+        // clickable value-suggestion chips that fill the value input — admin
+        // still adds each one manually with its own qty. No auto-add.
         $(document).on('click', '.preset-btn', function () {
-            const name   = $(this).data('name');
-            const values = String($(this).data('values')).split(',');
+            const name = $(this).data('name');
 
-            // Merge into existing row if name already used
+            // Merge into existing row if name already used → just scroll to it
             let existingRow = null;
             $('.option-name-input').each(function () {
                 if (normalize($(this).val()) === normalize(name)) existingRow = $(this).closest('.option-row');
             });
 
             if (existingRow) {
-                values.forEach(function(v) { addTag(existingRow, v); });
-                refreshValueSugs(existingRow);
                 existingRow[0].scrollIntoView({ behavior:'smooth', block:'center' });
                 existingRow.css('outline','2px solid #3d5af1');
                 setTimeout(function() { existingRow.css('outline',''); }, 800);
+                existingRow.find('.tag-input').focus();
             } else {
                 const idx = optionIndex++;
-                $('#optionsContainer').append(buildOptionRow(idx, name, values));
+                $('#optionsContainer').append(buildOptionRow(idx, name, []));   // empty values
                 const newRow = $('#optionsContainer .option-row').last();
-                refreshValueSugs(newRow);
+                refreshValueSugs(newRow);   // shows suggestion chips based on the name
                 fetchAndShowUsage(newRow);
+                newRow.find('.tag-input').focus();
                 toggleEmpty();
             }
         });
@@ -846,30 +854,45 @@
             renderSummaryTable();
         });
 
-        // ── Add tag via button
+        // ── Add tag via button (uses both value + qty inputs)
         $(document).on('click', '.add-tag-btn', function () {
-            const row   = $(this).closest('.option-row');
-            const input = row.find('.tag-input');
-            addTag(row, input.val());
-            input.val('').focus();
+            const row      = $(this).closest('.option-row');
+            const valInput = row.find('.tag-input');
+            const qtyInput = row.find('.tag-qty-input');
+            addTag(row, valInput.val(), qtyInput.val());
+            valInput.val('').focus();
+            qtyInput.val('1');
             refreshValueSugs(row);
         });
 
-        // ── Add tag via Enter
+        // ── Add tag via Enter on the value field (pulls qty from adjacent input)
         $(document).on('keydown', '.tag-input', function (e) {
             if (e.key !== 'Enter') return;
             e.preventDefault();
-            const row = $(this).closest('.option-row');
-            addTag(row, $(this).val());
+            const row      = $(this).closest('.option-row');
+            const qtyInput = row.find('.tag-qty-input');
+            addTag(row, $(this).val(), qtyInput.val());
             $(this).val('');
+            qtyInput.val('1');
             refreshValueSugs(row);
         });
 
-        // ── Click value suggestion chip → add as tag
+        // ── Enter on the qty field → same "add" (convenience for keyboard flow)
+        $(document).on('keydown', '.tag-qty-input', function (e) {
+            if (e.key !== 'Enter') return;
+            e.preventDefault();
+            const row = $(this).closest('.option-row');
+            row.find('.add-tag-btn').trigger('click');
+        });
+
+        // ── Click value suggestion chip → fill the value input, focus qty
+        // (previously it auto-added the tag with qty=0 — now admin still
+        // adds one at a time with a real qty)
         $(document).on('click', '.sug-val-btn', function () {
             const row = $(this).closest('.option-row');
-            addTag(row, $(this).data('value'));
-            $(this).remove();
+            row.find('.tag-input').val($(this).data('value'));
+            const qtyInput = row.find('.tag-qty-input');
+            qtyInput.focus().select();
         });
 
         // ── Name input → suggestions + value hints + usage count

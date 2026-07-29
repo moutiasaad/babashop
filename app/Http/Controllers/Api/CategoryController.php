@@ -12,13 +12,17 @@ class CategoryController extends Controller
      // Get all categories
     public function index()
     {
-        $categories = Category::where("visibility", 1)
-            ->with('subcategories') // Load subcategories relationship
+        // Consistency with show/getProductsByCategory: exclude soft-deleted
+        // rows in addition to hidden ones. Without this, a row flagged
+        // deleted=1 but still visibility=1 would leak into the API.
+        $categories = Category::where('visibility', 1)
+            ->where('deleted', 0)
+            ->with('subcategories')
             ->orderBy('order_item')
             ->get();
 
         return $categories;
-    }      
+    }
  
      // Get a specific category by ID
      public function show(Category $category)

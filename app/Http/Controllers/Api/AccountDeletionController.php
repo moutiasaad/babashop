@@ -15,8 +15,8 @@ class AccountDeletionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:50',
+            'email'  => 'required|email|max:255',
+            'phone'  => 'nullable|string|max:50',
             'reason' => 'nullable|string',
         ]);
 

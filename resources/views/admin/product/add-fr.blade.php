@@ -344,20 +344,22 @@
             </div>
             <div class="value-suggestions d-flex flex-wrap gap-1"></div>
             <div class="input-group input-group-sm mt-1">
-                <input type="text" class="form-control tag-input" placeholder="Ajouter une valeur…" autocomplete="off">
+                <input type="text" class="form-control tag-input" placeholder="Valeur (ex : 40, Rouge)…" autocomplete="off">
+                <input type="number" class="form-control tag-qty-input" min="0" value="1" placeholder="Qté" style="max-width:80px;">
                 <button type="button" class="btn btn-outline-primary add-tag-btn">+ Ajouter</button>
             </div>
         </div>`;
     }
 
-    function addTag(row, rawValue) {
+    function addTag(row, rawValue, rawQty) {
         const value = rawValue.trim();
         if (!value) return;
+        const qty = Math.max(0, parseInt(rawQty ?? 1) || 0);
         const display  = row.find('.tags-display');
         const optIndex = display.data('index');
         const existing = display.find('[name*="[value]"]').map(function(){ return this.value; }).get();
         if (existing.includes(value)) return;
-        display.append(makeTagHtml(optIndex, value, 0, '', '', '', undefined));
+        display.append(makeTagHtml(optIndex, value, qty, '', '', '', undefined));
         renderSummaryTable();
     }
 
@@ -475,9 +477,11 @@
             toggleEmpty();
         });
 
+        // Preset now only creates a row with the option NAME. The individual
+        // preset values (36, 37, ...) become suggestion chips — admin picks
+        // one, sets qty, then clicks + Ajouter. No auto-add.
         $(document).on('click', '.preset-btn', function () {
-            const name   = $(this).data('name');
-            const values = String($(this).data('values')).split(',');
+            const name = $(this).data('name');
 
             let existingRow = null;
             $('.option-name-input').each(function () {
@@ -485,16 +489,16 @@
             });
 
             if (existingRow) {
-                values.forEach(function(v) { addTag(existingRow, v); });
-                refreshValueSugs(existingRow);
                 existingRow[0].scrollIntoView({ behavior:'smooth', block:'center' });
                 existingRow.css('outline','2px solid #3d5af1');
                 setTimeout(function() { existingRow.css('outline',''); }, 800);
+                existingRow.find('.tag-input').focus();
             } else {
                 const idx = optionIndex++;
-                $('#optionsContainer').append(buildOptionRow(idx, name, values));
+                $('#optionsContainer').append(buildOptionRow(idx, name, []));
                 const newRow = $('#optionsContainer .option-row').last();
                 refreshValueSugs(newRow);
+                newRow.find('.tag-input').focus();
                 toggleEmpty();
             }
         });
@@ -602,26 +606,38 @@
         });
 
         $(document).on('click', '.add-tag-btn', function () {
-            const row   = $(this).closest('.option-row');
-            const input = row.find('.tag-input');
-            addTag(row, input.val());
-            input.val('').focus();
+            const row      = $(this).closest('.option-row');
+            const valInput = row.find('.tag-input');
+            const qtyInput = row.find('.tag-qty-input');
+            addTag(row, valInput.val(), qtyInput.val());
+            valInput.val('').focus();
+            qtyInput.val('1');
             refreshValueSugs(row);
         });
 
         $(document).on('keydown', '.tag-input', function (e) {
             if (e.key !== 'Enter') return;
             e.preventDefault();
-            const row = $(this).closest('.option-row');
-            addTag(row, $(this).val());
+            const row      = $(this).closest('.option-row');
+            const qtyInput = row.find('.tag-qty-input');
+            addTag(row, $(this).val(), qtyInput.val());
             $(this).val('');
+            qtyInput.val('1');
             refreshValueSugs(row);
         });
 
+        $(document).on('keydown', '.tag-qty-input', function (e) {
+            if (e.key !== 'Enter') return;
+            e.preventDefault();
+            const row = $(this).closest('.option-row');
+            row.find('.add-tag-btn').trigger('click');
+        });
+
+        // Suggestion chip → fill the value input, focus qty (no auto-add)
         $(document).on('click', '.sug-val-btn', function () {
             const row = $(this).closest('.option-row');
-            addTag(row, $(this).data('value'));
-            $(this).remove();
+            row.find('.tag-input').val($(this).data('value'));
+            row.find('.tag-qty-input').focus().select();
         });
 
         $(document).on('input', '.option-name-input', function () {
