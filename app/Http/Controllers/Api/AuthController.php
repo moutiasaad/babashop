@@ -182,20 +182,59 @@ class AuthController extends Controller
         }
     }
     
+    /**
+     * Permanently delete the authenticated user's account and all personal
+     * data linked to it. Orders are kept for legal/tax purposes but the
+     * personal fields on order rows are nulled out (anonymization).
+     *
+     * Runs inside a transaction so a mid-way failure doesn't leave the
+     * account half-deleted.
+     */
     public function destroyAccount(Request $request)
     {
-        try {
-            // Check if the Sanctum token is valid and the user exists
-            $user = $request->user();
-            if (!$user) {
-                return response()->json(['success' => false, 'message' => 'Invalid token or user not found'], 401);
-            }
-    
-            // Return success message if the token is valid and user exists
-            return response()->json(['success' => true, 'message' => 'Account deleted successfully'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
+        $user = $request->user();
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Session expirée. Reconnectez-vous.',
+            ], 401);
         }
+
+        $userId = $user->id;
+
+        \DB::transaction(function () use ($user, $userId) {
+            // 1. Purge personal/session data — safe to hard-delete.
+            \DB::table('carts')->where('user_id', $userId)->delete();
+            \DB::table('wishlists')->where('user_id', $userId)->delete();
+            \DB::table('otp')->where('user_id', $userId)->delete();
+            \DB::table('reviews')->where('user_id', $userId)->delete();
+            \DB::table('ratings')->where('user_id', $userId)->delete();
+            \DB::table('permission_user')->where('user_id', $userId)->delete();
+            \DB::table('sessions')->where('user_id', $userId)->delete();
+
+            // 2. Keep orders for tax/records but strip identifiable data.
+            //    NOTE: `orders.user_id` stays so operational reports still
+            //    aggregate correctly; sensitive fields are wiped.
+            \DB::table('orders')
+                ->where('user_id', $userId)
+                ->update([
+                    'fullname'   => 'Compte supprimé',
+                    'phone'      => null,
+                    'address'    => null,
+                    'updated_at' => now(),
+                ]);
+
+            // 3. Revoke every Sanctum token so no lingering session works.
+            $user->tokens()->delete();
+
+            // 4. Finally drop the user row itself.
+            $user->delete();
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Compte supprimé.',
+        ], 200);
     }
 
     public function verifyOtp(Request $request)
