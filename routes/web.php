@@ -5,9 +5,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\QuickOrderController;
 
-// Root → admin login
-Route::get('/', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/', [AuthController::class, 'login']);
+// Root → public marketing landing page for App Store / Play Store submissions.
+Route::view('/', 'marketing')->name('home');
+
+// Admin login moved off the root so the marketing page can live there.
+Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/admin/login', [AuthController::class, 'login']);
 
 Route::view('/privacy-policy', 'privacy')->name('privacy');
 Route::view('/account-deletion', 'account-deletion')->name('account-deletion');
