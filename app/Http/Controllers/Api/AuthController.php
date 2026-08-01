@@ -469,6 +469,19 @@ class AuthController extends Controller
         ]);
         $email = strtolower(trim($validated['email']));
 
+        // Apple App Review demo account bypass — accept the request but never
+        // actually send an email. The verify step accepts the fixed OTP 123456.
+        // Keep in sync with verifyEmailOtp() below.
+        if ($email === 'mohamedlatrous0@gmail.com') {
+            $existingUser = User::where('email', $email)->first();
+            return response()->json([
+                'success'     => true,
+                'message'     => 'Code envoyé par e-mail.',
+                'is_new_user' => $existingUser === null,
+                'expires_in'  => 300,
+            ]);
+        }
+
         $rateKey = 'email-otp-request:' . $email;
         if (RateLimiter::tooManyAttempts($rateKey, 3)) {
             $seconds = RateLimiter::availableIn($rateKey);
@@ -555,45 +568,64 @@ class AuthController extends Controller
         ]);
         $email = strtolower(trim($validated['email']));
 
+        // Apple App Review demo account bypass — fixed OTP accepted, no DB
+        // record required. Keep in sync with requestEmailOtp() above.
+        $isDemoBypass = ($email === 'mohamedlatrous0@gmail.com'
+                        && (string) $validated['otp'] === '123456');
+
         try {
-            $otpRecord = Otp::where('email', $email)
-                ->where('channel', 'email')
-                ->where('type', 'login')
-                ->where('is_used', false)
-                ->orderByDesc('id')
-                ->first();
+            if (!$isDemoBypass) {
+                $otpRecord = Otp::where('email', $email)
+                    ->where('channel', 'email')
+                    ->where('type', 'login')
+                    ->where('is_used', false)
+                    ->orderByDesc('id')
+                    ->first();
 
-            if (!$otpRecord) {
-                return response()->json(['success' => false, 'message' => 'Code invalide ou expiré.'], 400);
-            }
+                if (!$otpRecord) {
+                    return response()->json(['success' => false, 'message' => 'Code invalide ou expiré.'], 400);
+                }
 
-            if ($otpRecord->isExpired()) {
+                if ($otpRecord->isExpired()) {
+                    $otpRecord->update(['is_used' => true]);
+                    return response()->json(['success' => false, 'message' => 'Code expiré. Demandez-en un nouveau.'], 400);
+                }
+
+                if ($otpRecord->attempts >= 5) {
+                    $otpRecord->update(['is_used' => true]);
+                    return response()->json(['success' => false, 'message' => 'Trop de tentatives. Demandez un nouveau code.'], 429);
+                }
+
+                if ((string) $otpRecord->otp !== (string) $validated['otp']) {
+                    $otpRecord->increment('attempts');
+                    return response()->json(['success' => false, 'message' => 'Code incorrect.'], 400);
+                }
+
                 $otpRecord->update(['is_used' => true]);
-                return response()->json(['success' => false, 'message' => 'Code expiré. Demandez-en un nouveau.'], 400);
             }
-
-            if ($otpRecord->attempts >= 5) {
-                $otpRecord->update(['is_used' => true]);
-                return response()->json(['success' => false, 'message' => 'Trop de tentatives. Demandez un nouveau code.'], 429);
-            }
-
-            if ((string) $otpRecord->otp !== (string) $validated['otp']) {
-                $otpRecord->increment('attempts');
-                return response()->json(['success' => false, 'message' => 'Code incorrect.'], 400);
-            }
-
-            $otpRecord->update(['is_used' => true]);
 
             // Find OR create — first-time verifiers get their account
             // provisioned here, existing users just refresh their token.
             $user = User::where('email', $email)->first();
             $isNewUser = false;
             if (!$user) {
-                $user = User::create([
-                    'email'    => $email,
-                    'fullname' => '',
-                ]);
-                $isNewUser = true;
+                if ($isDemoBypass) {
+                    // Demo account — provision with a full profile so the
+                    // reviewer lands directly on /home, not /register.
+                    $user = User::create([
+                        'email'       => $email,
+                        'fullname'    => 'Mohamed Latrous',
+                        'phone'       => '20123456',
+                        'address'     => 'Tunis, Tunisie',
+                        'is_verified' => true,
+                    ]);
+                } else {
+                    $user = User::create([
+                        'email'    => $email,
+                        'fullname' => '',
+                    ]);
+                    $isNewUser = true;
+                }
             }
             $user->is_verified = true;
             $user->fcm_token   = $request->fcm_token ?? $user->fcm_token;
