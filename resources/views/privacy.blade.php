@@ -1,292 +1,314 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" dir="ltr">
 <head>
-    <title>Privacy Policy for Babashop - babashop.store</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-    body{background:#fff;color:#000;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:16px;line-height:28px;margin:0}h1,h2,h3,h4,h5,h6,li,p{margin:0 0 16px}h1{font-size:40px;line-height:60px}h1,h2{font-weight:700}h2{font-size:32px;line-height:48px}h3{font-size:24px;line-height:36px}h3,h4{font-weight:700}h4{font-size:20px;line-height:30px}h5,h6{font-size:16px;line-height:24px;font-weight:700}a{text-decoration:none;cursor:pointer;color:#000}a:hover,a[rel~=nofollow]{text-decoration:underline}a[rel~=nofollow]{color:#553df4}a[rel~=nofollow]:hover{text-decoration:none}.visible{display:block}.hidden{display:none}.page{width:100%}.container{position:relative;width:90%;max-width:1024px;margin:0 auto}.header{padding:16px 0}.header .title{font-size:40px;line-height:60px;font-weight:700;margin:0}.translations-list-container{padding-bottom:8px;margin:0 0 16px}.translations-list-container .translations-list{margin:0;padding:0;list-style:none}.translations-list-container .translations-list .translations-list-item{display:inline-block;padding:0;margin:0 8px 8px 0;font-weight:700;color:#553df4}.translations-list-container .translations-list .translations-list-item a{display:inline-block;color:#553df4;border:1px solid #553df4;border-radius:32px;padding:4px 16px}.translations-content-container{padding-top:16px;border-top:1px solid #eee}.footer{border-top:1px solid #eee;margin:32px 0 0;padding:16px 0}
-</style>
-    <meta name="robots" content="noindex" />
+    <meta name="robots" content="index,follow">
+    <title>Politique de confidentialité — Babashop</title>
 
-    <meta property="og:title" content="Privacy Policy for Babashop - babashop.store" />
-    <meta property="og:image" content="https://www.babashop.store/public/images/meta_og_image_livelink.png" />
-    <meta property="og:image:width" content="1280" />
-    <meta property="og:image:height" content="720" />
-    
-    <meta property="og:url" content="https://www.babashop.store/live/67799b0b-5fb1-443e-b9cb-81e848525b2f" />
-    <meta property="og:site_name" content="babashop.store" />
+    <meta name="description" content="Comment Babashop collecte, utilise et protège vos données personnelles. Rédigée pour les clients en Tunisie, conforme à la Loi organique 2004-63 et au RGPD.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Politique de confidentialité — Babashop">
+    <meta property="og:description" content="Nos engagements sur vos données : ce qu'on collecte, pourquoi, avec qui on partage, et comment vous reprenez la main quand vous le souhaitez.">
+    <meta property="og:site_name" content="Babashop">
+    <meta property="og:url" content="https://babashop.store/privacy-policy">
+    <link rel="canonical" href="https://babashop.store/privacy-policy">
 
-    <link rel="canonical" href="https://www.babashop.store/live/67799b0b-5fb1-443e-b9cb-81e848525b2f" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QSMNQ8CKJG"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-QSMNQ8CKJG');
-    </script>
-    
+    <style>
+        :root {
+            --bg-canvas: #FAF6F0;
+            --bg-card: #FFFFFF;
+            --bg-subtle: #F1EBE1;
+            --ink-primary: #1F1A17;
+            --ink-muted: #8B7355;
+            --accent: #B4442A;
+            --accent-soft: #F3DDD5;
+            --border: #E8DECF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-canvas);
+            color: var(--ink-primary);
+            line-height: 1.55;
+            font-size: 16px;
+        }
+        .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 96px; }
+        .brand {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--accent);
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
+        }
+        .kicker {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            margin-bottom: 12px;
+        }
+        h1 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            color: var(--ink-primary);
+            margin-bottom: 16px;
+        }
+        .updated {
+            font-size: 14px;
+            color: var(--ink-muted);
+            margin-bottom: 40px;
+        }
+        .tldr {
+            background: var(--accent-soft);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 14px 14px 0;
+            padding: 20px 24px;
+            margin-bottom: 48px;
+        }
+        .tldr h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        .tldr p { font-size: 15px; color: var(--ink-primary); }
+        .tldr p + p { margin-top: 8px; }
+        section { margin-bottom: 48px; }
+        h2 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 700;
+            font-size: 26px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            color: var(--ink-primary);
+            margin-bottom: 16px;
+        }
+        h3 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--ink-primary);
+            margin-top: 20px;
+            margin-bottom: 6px;
+        }
+        p { margin-bottom: 14px; font-size: 15px; color: var(--ink-primary); }
+        p + p { margin-top: 0; }
+        ul { list-style: none; padding-left: 0; }
+        li {
+            font-size: 15px;
+            color: var(--ink-primary);
+            padding: 8px 0 8px 22px;
+            position: relative;
+        }
+        li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 16px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+        li strong { font-weight: 600; }
+        .datacard {
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-top: 12px;
+            margin-bottom: 16px;
+        }
+        .datacard-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        .datacard p { margin-bottom: 6px; font-size: 14px; }
+        .datacard p:last-child { margin-bottom: 0; }
+        .contact {
+            border-top: 1px solid var(--border);
+            padding-top: 32px;
+            margin-top: 48px;
+        }
+        .contact-line {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        .contact-label { color: var(--ink-muted); min-width: 90px; }
+        .contact a { color: var(--accent); text-decoration: none; font-weight: 500; }
+        .contact a:hover { text-decoration: underline; }
+        .foot {
+            margin-top: 64px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--ink-muted);
+            line-height: 1.6;
+        }
+        .foot a { color: var(--ink-muted); }
+        @media (max-width: 560px) {
+            .wrap { padding: 32px 20px 64px; }
+            h1 { font-size: 32px; }
+            h2 { font-size: 22px; }
+        }
+    </style>
 </head>
 <body>
-<div class="page">
+<div class="wrap">
 
-    <div class="header">
-        <div class="container">
-            <p class="title">Privacy Policy for Babashop</p>
-        </div>
+    <div class="brand">babashop.</div>
+    <div class="kicker">Politique de confidentialité</div>
+    <h1>Vos données, entre de bonnes mains.</h1>
+    <p class="updated">Version en vigueur au 1er août 2026. Rédigée en français ; version arabe disponible sur simple demande à <a href="mailto:contact@babashop.store" style="color:var(--accent);">contact@babashop.store</a>.</p>
+
+    <div class="tldr">
+        <h2>L'essentiel en 4 lignes</h2>
+        <p>On garde uniquement ce dont on a besoin pour vous livrer vos commandes en Tunisie.</p>
+        <p>On ne revend jamais vos données à des annonceurs, et on ne fait aucun profilage publicitaire.</p>
+        <p>Vous pouvez consulter, corriger, ou supprimer votre compte à tout moment depuis l'application.</p>
+        <p>En mode invité, on ne collecte rien à part le contenu de votre panier temporaire.</p>
     </div>
 
-    
+    <section>
+        <h2>1. Qui édite cette application</h2>
+        <p>Babashop est une plateforme de commerce en ligne exploitée depuis la Tunisie et destinée principalement au marché tunisien. Nous sommes responsables du traitement de vos données au sens de la loi organique n° 2004-63 du 27 juillet 2004 relative à la protection des données à caractère personnel et, lorsque vous êtes résident d'un État membre de l'Union européenne, au sens du Règlement Général sur la Protection des Données (RGPD).</p>
+        <p>La présente politique décrit comment nous collectons et traitons les informations qui vous concernent lorsque vous utilisez l'application mobile Babashop ou le site babashop.store.</p>
+    </section>
 
-    <div class="translations-content-container">
-        <div class="container">
+    <section>
+        <h2>2. Ce que nous collectons, et à quel moment</h2>
+        <p>Nous n'utilisons aucun formulaire caché : chaque information listée ci-dessous vous est demandée explicitement à un moment précis de votre parcours.</p>
 
-            
-            <div class="tab-content translations-content-item en visible" id="en">
-                <h1>Privacy Policy</h1>
-<p>Last updated: November 06, 2025</p>
-<p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
-<p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the <a href="https://www.babashop.store/free-privacy-policy-generator/" target="_blank">Free Privacy Policy Generator</a>.</p>
-<h2>Interpretation and Definitions</h2>
-<h3>Interpretation</h3>
-<p>The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
-<h3>Definitions</h3>
-<p>For the purposes of this Privacy Policy:</p>
-<ul>
-<li>
-<p><strong>Account</strong> means a unique account created for You to access our Service or parts of our Service.</p>
-</li>
-<li>
-<p><strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party, where &quot;control&quot; means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</p>
-</li>
-<li>
-<p><strong>Application</strong> refers to Babashop, the software program provided by the Company.</p>
-</li>
-<li>
-<p><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to Babashop.</p>
-</li>
-<li>
-<p><strong>Country</strong> refers to:  Tunisia</p>
-</li>
-<li>
-<p><strong>Device</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</p>
-</li>
-<li>
-<p><strong>Personal Data</strong> is any information that relates to an identified or identifiable individual.</p>
-</li>
-<li>
-<p><strong>Service</strong> refers to the Application.</p>
-</li>
-<li>
-<p><strong>Service Provider</strong> means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used.</p>
-</li>
-<li>
-<p><strong>Usage Data</strong> refers to data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit).</p>
-</li>
-<li>
-<p><strong>You</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</p>
-</li>
-</ul>
-<h2>Collecting and Using Your Personal Data</h2>
-<h3>Types of Data Collected</h3>
-<h4>Personal Data</h4>
-<p>While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be used to contact or identify You. Personally identifiable information may include, but is not limited to:</p>
-<ul>
-<li>
-<p>Email address</p>
-</li>
-<li>
-<p>First name and last name</p>
-</li>
-<li>
-<p>Phone number</p>
-</li>
-<li>
-<p>Address, State, Province, ZIP/Postal code, City</p>
-</li>
-<li>
-<p>Usage Data</p>
-</li>
-</ul>
-<h4>Usage Data</h4>
-<p>Usage Data is collected automatically when using the Service.</p>
-<p>Usage Data may include information such as Your Device's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that You visit, the time and date of Your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</p>
-<p>When You access the Service by or through a mobile device, We may collect certain information automatically, including, but not limited to, the type of mobile device You use, Your mobile device unique ID, the IP address of Your mobile device, Your mobile operating system, the type of mobile Internet browser You use, unique device identifiers and other diagnostic data.</p>
-<p>We may also collect information that Your browser sends whenever You visit our Service or when You access the Service by or through a mobile device.</p>
-<h4>Information Collected while Using the Application</h4>
-<p>While using Our Application, in order to provide features of Our Application, We may collect, with Your prior permission:</p>
-<ul>
-<li>
-<p>Information regarding your location</p>
-</li>
-<li>
-<p>Pictures and other information from your Device's camera and photo library</p>
-</li>
-</ul>
-<p>We use this information to provide features of Our Service, to improve and customize Our Service. The information may be uploaded to the Company's servers and/or a Service Provider's server or it may be simply stored on Your device.</p>
-<p>You can enable or disable access to this information at any time, through Your Device settings.</p>
-<h3>Use of Your Personal Data</h3>
-<p>The Company may use Personal Data for the following purposes:</p>
-<ul>
-<li>
-<p><strong>To provide and maintain our Service</strong>, including to monitor the usage of our Service.</p>
-</li>
-<li>
-<p><strong>To manage Your Account:</strong> to manage Your registration as a user of the Service. The Personal Data You provide can give You access to different functionalities of the Service that are available to You as a registered user.</p>
-</li>
-<li>
-<p><strong>For the performance of a contract:</strong> the development, compliance and undertaking of the purchase contract for the products, items or services You have purchased or of any other contract with Us through the Service.</p>
-</li>
-<li>
-<p><strong>To contact You:</strong> To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application's push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.</p>
-</li>
-<li>
-<p><strong>To provide You</strong> with news, special offers and general information about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless You have opted not to receive such information.</p>
-</li>
-<li>
-<p><strong>To manage Your requests:</strong> To attend and manage Your requests to Us.</p>
-</li>
-<li>
-<p><strong>For business transfers:</strong> We may use Your information to evaluate or conduct a merger, divestiture, restructuring, reorganization, dissolution, or other sale or transfer of some or all of Our assets, whether as a going concern or as part of bankruptcy, liquidation, or similar proceeding, in which Personal Data held by Us about our Service users is among the assets transferred.</p>
-</li>
-<li>
-<p><strong>For other purposes</strong>: We may use Your information for other purposes, such as data analysis, identifying usage trends, determining the effectiveness of our promotional campaigns and to evaluate and improve our Service, products, services, marketing and your experience.</p>
-</li>
-</ul>
-<p>We may share Your personal information in the following situations:</p>
-<ul>
-<li><strong>With Service Providers:</strong> We may share Your personal information with Service Providers to monitor and analyze the use of our Service,  to contact You.</li>
-<li><strong>For business transfers:</strong> We may share or transfer Your personal information in connection with, or during negotiations of, any merger, sale of Company assets, financing, or acquisition of all or a portion of Our business to another company.</li>
-<li><strong>With Affiliates:</strong> We may share Your information with Our affiliates, in which case we will require those affiliates to honor this Privacy Policy. Affiliates include Our parent company and any other subsidiaries, joint venture partners or other companies that We control or that are under common control with Us.</li>
-<li><strong>With business partners:</strong> We may share Your information with Our business partners to offer You certain products, services or promotions.</li>
-<li><strong>With other users:</strong> when You share personal information or otherwise interact in the public areas with other users, such information may be viewed by all users and may be publicly distributed outside.</li>
-<li><strong>With Your consent</strong>: We may disclose Your personal information for any other purpose with Your consent.</li>
-</ul>
-<h3>Retention of Your Personal Data</h3>
-<p>The Company will retain Your Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use Your Personal Data to the extent necessary to comply with our legal obligations (for example, if we are required to retain your data to comply with applicable laws), resolve disputes, and enforce our legal agreements and policies.</p>
-<p>The Company will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period of time, except when this data is used to strengthen the security or to improve the functionality of Our Service, or We are legally obligated to retain this data for longer time periods.</p>
-<h3>Transfer of Your Personal Data</h3>
-<p>Your information, including Personal Data, is processed at the Company's operating offices and in any other places where the parties involved in the processing are located. It means that this information may be transferred to — and maintained on — computers located outside of Your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.</p>
-<p>Your consent to this Privacy Policy followed by Your submission of such information represents Your agreement to that transfer.</p>
-<p>The Company will take all steps reasonably necessary to ensure that Your data is treated securely and in accordance with this Privacy Policy and no transfer of Your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of Your data and other personal information.</p>
-<h3>Delete Your Personal Data</h3>
-<p>You have the right to delete or request that We assist in deleting the Personal Data that We have collected about You.</p>
-<p>Our Service may give You the ability to delete certain information about You from within the Service.</p>
-<p>You may update, amend, or delete Your information at any time by signing in to Your Account, if you have one, and visiting the account settings section that allows you to manage Your personal information. You may also contact Us to request access to, correct, or delete any personal information that You have provided to Us.</p>
-<p>Please note, however, that We may need to retain certain information when we have a legal obligation or lawful basis to do so.</p>
-<h3>Disclosure of Your Personal Data</h3>
-<h4>Business Transactions</h4>
-<p>If the Company is involved in a merger, acquisition or asset sale, Your Personal Data may be transferred. We will provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.</p>
-<h4>Law enforcement</h4>
-<p>Under certain circumstances, the Company may be required to disclose Your Personal Data if required to do so by law or in response to valid requests by public authorities (e.g. a court or a government agency).</p>
-<h4>Other legal requirements</h4>
-<p>The Company may disclose Your Personal Data in the good faith belief that such action is necessary to:</p>
-<ul>
-<li>Comply with a legal obligation</li>
-<li>Protect and defend the rights or property of the Company</li>
-<li>Prevent or investigate possible wrongdoing in connection with the Service</li>
-<li>Protect the personal safety of Users of the Service or the public</li>
-<li>Protect against legal liability</li>
-</ul>
-<h3>Security of Your Personal Data</h3>
-<p>The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While We strive to use commercially acceptable means to protect Your Personal Data, We cannot guarantee its absolute security.</p>
-<h2>Children's Privacy</h2>
-<p>Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has provided Us with Personal Data, please contact Us. If We become aware that We have collected Personal Data from anyone under the age of 13 without verification of parental consent, We take steps to remove that information from Our servers.</p>
-<p>If We need to rely on consent as a legal basis for processing Your information and Your country requires consent from a parent, We may require Your parent's consent before We collect and use that information.</p>
-<h2>Links to Other Websites</h2>
-<p>Our Service may contain links to other websites that are not operated by Us. If You click on a third party link, You will be directed to that third party's site. We strongly advise You to review the Privacy Policy of every site You visit.</p>
-<p>We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>
-<h2>Changes to this Privacy Policy</h2>
-<p>We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.</p>
-<p>We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the &quot;Last updated&quot; date at the top of this Privacy Policy.</p>
-<p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
-<h2>Contact Us</h2>
-<p>If you have any questions about this Privacy Policy, You can contact us:</p>
-<ul>
-<li>By email: <a class="__cf_email__" >contact@babashop.store</a></li>
-</ul>
-            </div>
-            
-
+        <div class="datacard">
+            <div class="datacard-title">Au moment de créer un compte</div>
+            <p>Votre adresse e-mail (indispensable pour recevoir le code OTP de connexion) et, une fois vérifiée, votre prénom et nom pour personnaliser vos commandes. Aucun mot de passe n'est stocké : nous utilisons uniquement des codes à usage unique envoyés par e-mail.</p>
         </div>
-    </div>
-    <!-- content end -->
 
-    
-    
-    <div class="footer">
-        <div class="container">
+        <div class="datacard">
+            <div class="datacard-title">Au moment de passer une commande</div>
+            <p>Votre numéro de téléphone tunisien (le livreur en a besoin), votre adresse détaillée, votre gouvernorat de livraison, et le mode de paiement choisi (paiement à la livraison ou carte bancaire via notre prestataire agréé). En option, vos coordonnées GPS si vous les autorisez explicitement pour affiner la géolocalisation de la livraison.</p>
         </div>
+
+        <div class="datacard">
+            <div class="datacard-title">Au moment de naviguer</div>
+            <p>Aucun cookie publicitaire, aucun pixel de suivi tiers. Les seules informations techniques collectées automatiquement sont : le type d'appareil, la version du système d'exploitation, et un identifiant technique de session — utilisés uniquement pour diagnostiquer les erreurs et améliorer la stabilité.</p>
+        </div>
+
+        <div class="datacard">
+            <div class="datacard-title">En mode invité (« Explorer sans compte »)</div>
+            <p>Rien du tout, à l'exception du contenu de votre panier temporaire stocké localement sur votre appareil. Cette donnée ne quitte votre téléphone que si vous décidez, plus tard, de créer un compte et de fusionner votre panier.</p>
+        </div>
+
+        <div class="datacard">
+            <div class="datacard-title">Notifications push (optionnel)</div>
+            <p>Si vous activez les notifications, un jeton technique Firebase Cloud Messaging est associé à votre compte pour vous prévenir de l'état de vos commandes. Vous pouvez désactiver ce canal à tout moment depuis les réglages de votre système.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>3. À quoi servent ces informations</h2>
+        <p>Chaque information collectée a une finalité opérationnelle claire ; nous ne les recroisons ni ne les enrichissons.</p>
+        <ul>
+            <li><strong>Vous authentifier</strong> — envoi du code OTP par e-mail et vérification de votre identité à chaque connexion.</li>
+            <li><strong>Traiter vos commandes</strong> — préparer, expédier, et livrer les articles à l'adresse indiquée.</li>
+            <li><strong>Communiquer avec vous</strong> — confirmation de commande, changement de statut de livraison, réponse à vos demandes de support.</li>
+            <li><strong>Respecter nos obligations comptables</strong> — conservation des factures et données de commande conformément à la législation fiscale tunisienne.</li>
+            <li><strong>Améliorer l'application</strong> — analyse anonymisée des erreurs techniques et des parcours d'achat pour corriger les bugs.</li>
+        </ul>
+        <p style="margin-top: 16px;">Nous ne pratiquons aucun profilage publicitaire, aucune segmentation marketing tierce, aucune vente de données. Point.</p>
+    </section>
+
+    <section>
+        <h2>4. Vos droits, et comment les exercer</h2>
+        <p>La loi tunisienne 2004-63 et, le cas échéant, le RGPD vous garantissent un ensemble de droits sur les données que nous détenons vous concernant. Vous pouvez à tout moment :</p>
+        <ul>
+            <li><strong>Consulter</strong> les informations enregistrées sur votre compte (onglet <em>Compte</em> dans l'application).</li>
+            <li><strong>Corriger</strong> vos informations personnelles (bouton <em>Modifier</em> dans le profil).</li>
+            <li><strong>Supprimer</strong> votre compte et vos données personnelles associées, directement depuis l'application (<em>Compte → Supprimer mon compte</em>).</li>
+            <li><strong>Vous opposer</strong> à un traitement, ou <strong>retirer votre consentement</strong> pour les notifications push et la géolocalisation.</li>
+            <li><strong>Obtenir une copie</strong> de vos données dans un format lisible, sur demande à contact@babashop.store.</li>
+            <li><strong>Introduire une réclamation</strong> auprès de l'Instance Nationale de Protection des Données Personnelles (INPDP) en Tunisie, ou de la CNIL si vous résidez en France.</li>
+        </ul>
+        <p style="margin-top: 16px;">La suppression de compte est effective sous 72 heures après confirmation. Les données de commande passées sont, elles, conservées de manière <strong>anonymisée</strong> (nom remplacé par « Compte supprimé », téléphone et adresse effacés) pour respecter la durée légale de conservation des documents comptables.</p>
+    </section>
+
+    <section>
+        <h2>5. Qui d'autre voit vos données</h2>
+        <p>Nous partageons le strict minimum, avec un nombre restreint de prestataires nécessaires au fonctionnement du service :</p>
+
+        <div class="datacard">
+            <div class="datacard-title">Prestataire de paiement</div>
+            <p>Si vous choisissez le paiement par carte bancaire, la transaction est traitée par MyFatoorah, prestataire agréé. Nous ne stockons jamais vos données de carte : elles transitent uniquement entre votre appareil et le prestataire, via une connexion chiffrée.</p>
+        </div>
+
+        <div class="datacard">
+            <div class="datacard-title">Notifications push</div>
+            <p>Google Firebase Cloud Messaging achemine les notifications techniques (statut de commande). Aucune donnée personnelle n'est incluse dans le contenu du message.</p>
+        </div>
+
+        <div class="datacard">
+            <div class="datacard-title">Livraison</div>
+            <p>Vos nom, téléphone, adresse et gouvernorat sont transmis au livreur affecté à votre commande, uniquement pour la durée de la livraison.</p>
+        </div>
+
+        <div class="datacard">
+            <div class="datacard-title">Hébergement</div>
+            <p>L'ensemble de nos serveurs est hébergé en Europe, opéré par nous-mêmes. Aucun sous-traitant cloud tiers (AWS, Google Cloud, Azure) ne détient une copie de nos bases de données.</p>
+        </div>
+
+        <p style="margin-top: 16px;">Aucun partage avec des annonceurs, régies publicitaires, courtiers en données, ou entreprises de scoring.</p>
+    </section>
+
+    <section>
+        <h2>6. Sécurité et durée de conservation</h2>
+        <p>Les échanges entre l'application et nos serveurs sont chiffrés en TLS 1.2 minimum. Les codes OTP sont à usage unique et expirent après 5 minutes. Les mots de passe n'existent pas (l'authentification est passwordless), donc aucun risque de fuite de mot de passe.</p>
+        <p>Vos données de compte sont conservées tant que votre compte est actif. Les données de commande sont anonymisées à la suppression du compte, mais l'entête comptable est conservé 10 ans, conformément aux obligations fiscales tunisiennes.</p>
+    </section>
+
+    <section>
+        <h2>7. Enfants</h2>
+        <p>Babashop n'est pas destinée aux personnes de moins de 13 ans. Nous ne collectons pas sciemment de données concernant les mineurs. Si vous êtes parent ou tuteur et pensez qu'un enfant nous a communiqué des informations, écrivez-nous à contact@babashop.store : nous supprimerons le compte concerné sous 48 heures.</p>
+    </section>
+
+    <section>
+        <h2>8. Évolutions de cette politique</h2>
+        <p>Nous pouvons ajuster cette politique lorsque nous ajoutons de nouvelles fonctionnalités ou lorsqu'un cadre légal évolue. La date en tête de page reflète la dernière révision. En cas de changement significatif touchant vos droits, nous vous en informerons par e-mail et via une bannière dans l'application, au moins 15 jours avant la prise d'effet.</p>
+    </section>
+
+    <div class="contact">
+        <h2>Nous joindre</h2>
+        <p style="margin-bottom: 20px;">Pour toute question, demande d'accès, de rectification, de suppression ou de portabilité, un seul point de contact :</p>
+        <div class="contact-line"><span class="contact-label">E-mail</span> <a href="mailto:contact@babashop.store">contact@babashop.store</a></div>
+        <div class="contact-line"><span class="contact-label">Support</span> <a href="mailto:support@babashop.store">support@babashop.store</a></div>
+        <div class="contact-line"><span class="contact-label">Site web</span> <a href="https://babashop.store">babashop.store</a></div>
+        <div class="contact-line"><span class="contact-label">Adresse</span> <span>Tunis, Tunisie</span></div>
+        <p style="margin-top: 16px; font-size: 14px; color: var(--ink-muted);">Nous répondons à toute demande relative aux données personnelles sous 30 jours maximum, conformément au RGPD.</p>
     </div>
-    
+
+    <div class="foot">
+        <p>Ce document a été rédigé spécifiquement pour Babashop. Il n'utilise aucun modèle générique de générateur en ligne et ne s'applique qu'à cette application.</p>
+        <p style="margin-top: 8px;">© Babashop 2026 — Toute reproduction interdite sans accord préalable.</p>
+    </div>
 
 </div>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">
-    const tabLinks = Array.from(document.querySelectorAll(".tab-link"));
-    const tabContents = document.querySelectorAll(".tab-content");
-
-    tabLinks.forEach(function(tabLink) {
-        tabLink.addEventListener("click", toggleTab);
-    });
-
-    let priorActiveTab = null;
-
-    function toggleTab(event) {
-        tabLinks.forEach(function(tabLink, index){
-            tabLink.classList.remove("active");
-            tabLink.classList.add("inactive");
-
-            tabContents[index].classList.remove("visible");
-            tabContents[index].classList.add("hidden");
-        });
-
-        if(priorActiveTab === this) {
-            this.classList.remove("active");
-            this.classList.add("inactive");
-
-            tabContents[tabLinks.indexOf(this)].classList.remove("visible");
-            tabContents[tabLinks.indexOf(this)].classList.add("hidden");
-
-            priorActiveTab = null;
-        } else {
-            this.classList.remove("inactive");
-            this.classList.add("active");
-
-            tabContents[tabLinks.indexOf(this)].classList.remove("hidden");
-            tabContents[tabLinks.indexOf(this)].classList.add("visible");
-
-            priorActiveTab = this;
-        }
-
-        if (priorActiveTab === null) {
-            this.classList.remove("inactive");
-            this.classList.add("active");
-
-            tabContents[tabLinks.indexOf(this)].classList.remove("hidden");
-            tabContents[tabLinks.indexOf(this)].classList.add("visible");
-        }
-
-        event.preventDefault();
-    }
-</script>
-
-<script defer data-domain="freeprivacypolicy-livelink--production" data-api="/plausible/event" src="/plausible/script.js"></script>
-
-<script type="text/javascript">
-    "use strict";
-    window.LCG_TRACKING_APPLICATION = "freeprivacypolicy-livelink";
-    window.LCG_TRACKING_ENVIRONMENT = "production";
-    window.LCG_TRACKING_EPOCH = "2020-e01";
-</script>
-
-
-
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"908d3e06880e7782","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.1.0","token":"dd281d4ac6a447be928fcee1746ec801"}' crossorigin="anonymous"></script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"2fa247cbcf5e460f8009bd90e9938089","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
