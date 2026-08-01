@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Support - Shaieb.store</title>
+    <title>Support - Babashop</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -223,7 +223,7 @@
         <div class="contact-info">
             <h3>Autres moyens de nous contacter</h3>
             <p>📞 Téléphone: <a href="tel:+21612345678">+216 12 345 678</a></p>
-            <p>📧 Email: <a href="mailto:support@shaieb.store">support@shaieb.store</a></p>
+            <p>📧 Email: <a href="mailto:support@babashop.store">support@babashop.store</a></p>
             <p>🕐 Horaires: Lundi - Samedi, 9h00 - 18h00</p>
         </div>
     </div>

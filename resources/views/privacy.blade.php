@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Privacy Policy for ShaiebExpo - Shaieb.store</title>
+    <title>Privacy Policy for Babashop - babashop.store</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,15 +11,15 @@
 </style>
     <meta name="robots" content="noindex" />
 
-    <meta property="og:title" content="Privacy Policy for ShaiebExpo - Shaieb.store" />
-    <meta property="og:image" content="https://www.Shaieb.store/public/images/meta_og_image_livelink.png" />
+    <meta property="og:title" content="Privacy Policy for Babashop - babashop.store" />
+    <meta property="og:image" content="https://www.babashop.store/public/images/meta_og_image_livelink.png" />
     <meta property="og:image:width" content="1280" />
     <meta property="og:image:height" content="720" />
     
-    <meta property="og:url" content="https://www.ShaiebExpoportal.online/live/67799b0b-5fb1-443e-b9cb-81e848525b2f" />
-    <meta property="og:site_name" content="Shaieb.store" />
+    <meta property="og:url" content="https://www.babashop.store/live/67799b0b-5fb1-443e-b9cb-81e848525b2f" />
+    <meta property="og:site_name" content="babashop.store" />
 
-    <link rel="canonical" href="https://www.Shaieb.store/live/67799b0b-5fb1-443e-b9cb-81e848525b2f" />
+    <link rel="canonical" href="https://www.babashop.store/live/67799b0b-5fb1-443e-b9cb-81e848525b2f" />
 
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QSMNQ8CKJG"></script>
@@ -36,7 +36,7 @@
 
     <div class="header">
         <div class="container">
-            <p class="title">Privacy Policy for ShaiebExpo</p>
+            <p class="title">Privacy Policy for Babashop</p>
         </div>
     </div>
 
@@ -50,7 +50,7 @@
                 <h1>Privacy Policy</h1>
 <p>Last updated: November 06, 2025</p>
 <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
-<p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the <a href="https://www.ShaiebExpoportal.online/free-privacy-policy-generator/" target="_blank">Free Privacy Policy Generator</a>.</p>
+<p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the <a href="https://www.babashop.store/free-privacy-policy-generator/" target="_blank">Free Privacy Policy Generator</a>.</p>
 <h2>Interpretation and Definitions</h2>
 <h3>Interpretation</h3>
 <p>The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
@@ -64,10 +64,10 @@
 <p><strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party, where &quot;control&quot; means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</p>
 </li>
 <li>
-<p><strong>Application</strong> refers to ShaiebExpo, the software program provided by the Company.</p>
+<p><strong>Application</strong> refers to Babashop, the software program provided by the Company.</p>
 </li>
 <li>
-<p><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to ShaiebExpo.</p>
+<p><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to Babashop.</p>
 </li>
 <li>
 <p><strong>Country</strong> refers to:  Tunisia</p>
@@ -207,7 +207,7 @@
 <h2>Contact Us</h2>
 <p>If you have any questions about this Privacy Policy, You can contact us:</p>
 <ul>
-<li>By email: <a class="__cf_email__" >shaiebexpo@gmail.com</a></li>
+<li>By email: <a class="__cf_email__" >contact@babashop.store</a></li>
 </ul>
             </div>
             

@@ -6,7 +6,7 @@
                     <a class="d-inline-block" href="#">
                         <img class="header_topLogo" src="/admin/img/logo.png" alt="logo">
                     </a>
-                    <span style="color:#88bef5;">Shaieb Store</span>
+                    <span style="color:#B4442A;">Babashop</span>
                 </a>
             </div>
             <button class="btn header_tglBtn fs_16 d-xl-none" type="button">

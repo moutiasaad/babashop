@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Babashop API",
-    "description": "Complete API collection for Babashop / ShaiebExpo — base URL and token are stored as collection variables.",
+    "description": "Complete API collection for Babashop — base URL and token are stored as collection variables.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -237,7 +237,7 @@
           "request": {
             "method": "GET",
             "header": [{ "key": "Accept", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/merchants/search/shaieb", "host": ["{{base_url}}"], "path": ["merchants","search","shaieb"] }
+            "url": { "raw": "{{base_url}}/merchants/search/babashop", "host": ["{{base_url}}"], "path": ["merchants","search","babashop"] }
           }
         },
         {

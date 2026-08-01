@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <title>Shaieb Store - Modifier un produit</title>
+    <title>Babashop - Modifier un produit</title>
 
     <!-- stylesheets -->
     <link rel="stylesheet" href="/admin/css/bootstrap.min.css">

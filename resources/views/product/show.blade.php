@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="/admin/img/icon-lovard.png">
-    <title>{{ $product->name }} - Shaieb Expo</title>
+    <title>{{ $product->name }} - Babashop</title>
 
     @php
         $hasDiscount = $product->discount_price && $product->discount_price < $product->price;
@@ -39,22 +39,22 @@
             $ogImage = url($ogImage);
         }
 
-        $ogDescription = $product->description ? Str::limit(strip_tags($product->description), 160) : 'Decouvrez ' . $product->name . ' sur Shaieb Expo - ' . number_format($productPrice, 2) . ' TND';
+        $ogDescription = $product->description ? Str::limit(strip_tags($product->description), 160) : 'Decouvrez ' . $product->name . ' sur Babashop - ' . number_format($productPrice, 2) . ' TND';
     @endphp
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="product">
-    <meta property="og:title" content="{{ $product->name }} - Shaieb Expo">
+    <meta property="og:title" content="{{ $product->name }} - Babashop">
     <meta property="og:description" content="{{ $ogDescription }}">
     <meta property="og:image" content="{{ $ogImage }}">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:site_name" content="Shaieb Expo">
+    <meta property="og:site_name" content="Babashop">
     <meta property="product:price:amount" content="{{ $productPrice }}">
     <meta property="product:price:currency" content="TND">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $product->name }} - Shaieb Expo">
+    <meta name="twitter:title" content="{{ $product->name }} - Babashop">
     <meta name="twitter:description" content="{{ $ogDescription }}">
     <meta name="twitter:image" content="{{ $ogImage }}">
 
@@ -469,9 +469,9 @@
     <!-- App Banner -->
     <div class="app-banner">
         <div class="app-banner-content">
-            <img src="/admin/img/logo_shaieb.png" alt="Shaieb Expo">
+            <img src="/admin/img/logo_babashop.png" alt="Babashop">
             <div class="app-banner-text">
-                <h4>Shaieb Expo</h4>
+                <h4>Babashop</h4>
                 <p>Telecharger l'application</p>
             </div>
         </div>
