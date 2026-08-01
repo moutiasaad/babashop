@@ -13,17 +13,33 @@ class ProductController extends Controller
 {
     /**
      * Convert any stored image path/URL to one accessible from the current request host.
-     * Handles two cases:
-     *   - Full URL stored with a different host (e.g. http://127.0.0.1:8000/uploads/...)
-     *   - Relative path stored without host (e.g. uploads/products/file.jpg)
-     * Always rewrites the host to match the incoming request so Flutter devices
-     * (which use the LAN IP) get URLs they can actually reach.
+     * Handles three cases:
+     *   - External CDN URL (LoremFlickr, Unsplash, brand shops etc.) → pass through
+     *     UNCHANGED. Stripping the host would break the URL and drop query params
+     *     like `?lock=` used by seeded placeholders.
+     *   - Full URL stored with our own host (localhost, babashop.store, shaieb.store) →
+     *     rewrite host to the current request so Flutter devices using LAN IPs
+     *     still get reachable URLs.
+     *   - Relative path (e.g. uploads/products/file.jpg) → prepend current request host.
      */
     private function imgUrl(?string $stored): ?string
     {
         if (!$stored) return null;
 
         if (str_starts_with($stored, 'http')) {
+            $host = strtolower(parse_url($stored, PHP_URL_HOST) ?? '');
+            $ownHosts = [
+                'babashop.store', 'www.babashop.store',
+                'shaieb.store', 'www.shaieb.store',
+                '127.0.0.1', 'localhost',
+            ];
+            $isOwnHost = in_array($host, $ownHosts, true)
+                || str_starts_with($host, '192.168.')
+                || str_starts_with($host, '10.');
+            if (!$isOwnHost) {
+                // External CDN — return the URL exactly as stored.
+                return $stored;
+            }
             $path = parse_url($stored, PHP_URL_PATH);
         } else {
             $path = '/' . ltrim($stored, '/');

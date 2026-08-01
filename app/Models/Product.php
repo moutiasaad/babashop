@@ -94,7 +94,16 @@ class Product extends Model
                 return env('FILES_CDN')."/uploads/" . $attachment->folder . '/' . $attachment->name;
             })->toArray();
         }
+        if (!$value) return [];
+
+        // If the stored value is already a full URL (external CDN like
+        // LoremFlickr / Unsplash / a brand shop), return it unchanged.
+        // Blindly prepending FILES_CDN would break the URL.
+        if (str_starts_with($value, 'http://') || str_starts_with($value, 'https://')) {
+            return [$value];
+        }
+
         $image = env('FILES_CDN') . $value;
-        return $image ? [$image] : [];
+        return [$image];
     }
 }
