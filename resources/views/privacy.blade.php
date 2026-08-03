@@ -177,136 +177,167 @@
 
     <div class="brand">babashop.</div>
     <div class="kicker">Politique de confidentialité</div>
-    <h1>Vos données, entre de bonnes mains.</h1>
-    <p class="updated">Version en vigueur au 1er août 2026. Rédigée en français ; version arabe disponible sur simple demande à <a href="mailto:contact@babashop.store" style="color:var(--accent);">contact@babashop.store</a>.</p>
+    <h1>Politique de confidentialité de Babashop</h1>
+    <p class="updated">Dernière mise à jour : 3 août 2026</p>
 
     <div class="tldr">
-        <h2>L'essentiel en 4 lignes</h2>
-        <p>On garde uniquement ce dont on a besoin pour vous livrer vos commandes en Tunisie.</p>
-        <p>On ne revend jamais vos données à des annonceurs, et on ne fait aucun profilage publicitaire.</p>
-        <p>Vous pouvez consulter, corriger, ou supprimer votre compte à tout moment depuis l'application.</p>
-        <p>En mode invité, on ne collecte rien à part le contenu de votre panier temporaire.</p>
+        <h2>En résumé</h2>
+        <p>Cette Politique de confidentialité décrit nos règles et procédures relatives à la collecte, l'utilisation et la divulgation de vos informations lorsque vous utilisez le Service, et vous informe de vos droits en matière de confidentialité et de la manière dont la loi vous protège.</p>
+        <p>Nous utilisons vos données personnelles pour fournir et améliorer le Service. En utilisant le Service, vous acceptez la collecte et l'utilisation des informations conformément à la présente Politique de confidentialité.</p>
     </div>
 
     <section>
-        <h2>1. Qui édite cette application</h2>
-        <p>Babashop est une plateforme de commerce en ligne exploitée depuis la Tunisie et destinée principalement au marché tunisien. Nous sommes responsables du traitement de vos données au sens de la loi organique n° 2004-63 du 27 juillet 2004 relative à la protection des données à caractère personnel et, lorsque vous êtes résident d'un État membre de l'Union européenne, au sens du Règlement Général sur la Protection des Données (RGPD).</p>
-        <p>La présente politique décrit comment nous collectons et traitons les informations qui vous concernent lorsque vous utilisez l'application mobile Babashop ou le site babashop.store.</p>
-    </section>
+        <h2>Interprétation et définitions</h2>
+        <h3>Interprétation</h3>
+        <p>Les mots dont la lettre initiale est en majuscule ont des significations définies dans les conditions suivantes. Les définitions ci-après ont la même signification, qu'elles apparaissent au singulier ou au pluriel.</p>
 
-    <section>
-        <h2>2. Ce que nous collectons, et à quel moment</h2>
-        <p>Nous n'utilisons aucun formulaire caché : chaque information listée ci-dessous vous est demandée explicitement à un moment précis de votre parcours.</p>
-
-        <div class="datacard">
-            <div class="datacard-title">Au moment de créer un compte</div>
-            <p>Votre adresse e-mail (indispensable pour recevoir le code OTP de connexion) et, une fois vérifiée, votre prénom et nom pour personnaliser vos commandes. Aucun mot de passe n'est stocké : nous utilisons uniquement des codes à usage unique envoyés par e-mail.</p>
-        </div>
-
-        <div class="datacard">
-            <div class="datacard-title">Au moment de passer une commande</div>
-            <p>Votre numéro de téléphone tunisien (le livreur en a besoin), votre adresse détaillée, votre gouvernorat de livraison, et le mode de paiement choisi (paiement à la livraison ou carte bancaire via notre prestataire agréé). En option, vos coordonnées GPS si vous les autorisez explicitement pour affiner la géolocalisation de la livraison.</p>
-        </div>
-
-        <div class="datacard">
-            <div class="datacard-title">Au moment de naviguer</div>
-            <p>Aucun cookie publicitaire, aucun pixel de suivi tiers. Les seules informations techniques collectées automatiquement sont : le type d'appareil, la version du système d'exploitation, et un identifiant technique de session — utilisés uniquement pour diagnostiquer les erreurs et améliorer la stabilité.</p>
-        </div>
-
-        <div class="datacard">
-            <div class="datacard-title">En mode invité (« Explorer sans compte »)</div>
-            <p>Rien du tout, à l'exception du contenu de votre panier temporaire stocké localement sur votre appareil. Cette donnée ne quitte votre téléphone que si vous décidez, plus tard, de créer un compte et de fusionner votre panier.</p>
-        </div>
-
-        <div class="datacard">
-            <div class="datacard-title">Notifications push (optionnel)</div>
-            <p>Si vous activez les notifications, un jeton technique Firebase Cloud Messaging est associé à votre compte pour vous prévenir de l'état de vos commandes. Vous pouvez désactiver ce canal à tout moment depuis les réglages de votre système.</p>
-        </div>
-    </section>
-
-    <section>
-        <h2>3. À quoi servent ces informations</h2>
-        <p>Chaque information collectée a une finalité opérationnelle claire ; nous ne les recroisons ni ne les enrichissons.</p>
+        <h3>Définitions</h3>
+        <p>Aux fins de la présente Politique de confidentialité :</p>
         <ul>
-            <li><strong>Vous authentifier</strong> — envoi du code OTP par e-mail et vérification de votre identité à chaque connexion.</li>
-            <li><strong>Traiter vos commandes</strong> — préparer, expédier, et livrer les articles à l'adresse indiquée.</li>
-            <li><strong>Communiquer avec vous</strong> — confirmation de commande, changement de statut de livraison, réponse à vos demandes de support.</li>
-            <li><strong>Respecter nos obligations comptables</strong> — conservation des factures et données de commande conformément à la législation fiscale tunisienne.</li>
-            <li><strong>Améliorer l'application</strong> — analyse anonymisée des erreurs techniques et des parcours d'achat pour corriger les bugs.</li>
+            <li><strong>Compte</strong> désigne un compte unique créé pour vous donner accès à notre Service ou à des parties de notre Service.</li>
+            <li><strong>Affilié</strong> désigne une entité qui contrôle, est contrôlée par ou est sous contrôle commun avec une partie, où « contrôle » signifie la propriété de 50 % ou plus des actions, participations ou autres titres donnant droit de vote pour l'élection des administrateurs ou d'une autre autorité de gestion.</li>
+            <li><strong>Application</strong> fait référence à Babashop, le programme logiciel fourni par la Société.</li>
+            <li><strong>Société</strong> (désignée soit par « la Société », « Nous », « Notre » ou « Nos » dans le présent accord) fait référence à Babashop.</li>
+            <li><strong>Pays</strong> fait référence à : Tunisie</li>
+            <li><strong>Appareil</strong> désigne tout appareil pouvant accéder au Service, tel qu'un ordinateur, un téléphone portable ou une tablette numérique.</li>
+            <li><strong>Données personnelles</strong> désigne toute information se rapportant à une personne identifiée ou identifiable.</li>
+            <li><strong>Service</strong> fait référence à l'Application.</li>
+            <li><strong>Prestataire de services</strong> désigne toute personne physique ou morale qui traite les données pour le compte de la Société. Il s'agit de sociétés tierces ou de personnes employées par la Société pour faciliter le Service, fournir le Service au nom de la Société, exécuter des services liés au Service ou aider la Société à analyser la manière dont le Service est utilisé.</li>
+            <li><strong>Données d'utilisation</strong> désigne les données collectées automatiquement, soit générées par l'utilisation du Service, soit provenant de l'infrastructure du Service elle-même (par exemple, la durée d'une visite de page).</li>
+            <li><strong>Vous</strong> désigne la personne qui accède au Service ou qui l'utilise, ou la société ou autre entité juridique au nom de laquelle cette personne accède au Service ou l'utilise, selon le cas.</li>
         </ul>
-        <p style="margin-top: 16px;">Nous ne pratiquons aucun profilage publicitaire, aucune segmentation marketing tierce, aucune vente de données. Point.</p>
     </section>
 
     <section>
-        <h2>4. Vos droits, et comment les exercer</h2>
-        <p>La loi tunisienne 2004-63 et, le cas échéant, le RGPD vous garantissent un ensemble de droits sur les données que nous détenons vous concernant. Vous pouvez à tout moment :</p>
+        <h2>Collecte et utilisation de vos données personnelles</h2>
+        <h3>Types de données collectées</h3>
+
+        <div class="datacard">
+            <div class="datacard-title">Données personnelles</div>
+            <p>Lors de l'utilisation de notre Service, nous pouvons vous demander de nous fournir certaines informations personnellement identifiables pouvant être utilisées pour vous contacter ou vous identifier. Les informations personnellement identifiables peuvent inclure, sans s'y limiter :</p>
+            <p>— Adresse e-mail</p>
+            <p>— Prénom et nom</p>
+            <p>— Numéro de téléphone</p>
+            <p>— Adresse, État, Province, Code postal, Ville</p>
+            <p>— Données d'utilisation</p>
+        </div>
+
+        <div class="datacard">
+            <div class="datacard-title">Données d'utilisation</div>
+            <p>Les Données d'utilisation sont collectées automatiquement lors de l'utilisation du Service.</p>
+            <p>Les Données d'utilisation peuvent inclure des informations telles que l'adresse de protocole Internet de votre Appareil (par exemple, l'adresse IP), le type de navigateur, la version du navigateur, les pages de notre Service que vous visitez, l'heure et la date de votre visite, le temps passé sur ces pages, les identifiants uniques de l'appareil et d'autres données de diagnostic.</p>
+            <p>Lorsque vous accédez au Service par ou via un appareil mobile, nous pouvons collecter automatiquement certaines informations, notamment le type d'appareil mobile que vous utilisez, l'identifiant unique de votre appareil mobile, l'adresse IP de votre appareil mobile, votre système d'exploitation mobile, le type de navigateur Internet mobile que vous utilisez, les identifiants uniques de l'appareil et d'autres données de diagnostic.</p>
+            <p>Nous pouvons également collecter les informations envoyées par votre navigateur chaque fois que vous visitez notre Service ou que vous accédez au Service par ou via un appareil mobile.</p>
+        </div>
+
+        <div class="datacard">
+            <div class="datacard-title">Informations collectées lors de l'utilisation de l'Application</div>
+            <p>Lors de l'utilisation de notre Application, afin de fournir les fonctionnalités de notre Application, nous pouvons collecter, avec votre autorisation préalable :</p>
+            <p>— Des informations concernant votre localisation</p>
+            <p>— Des photos et autres informations provenant de l'appareil photo et de la bibliothèque de photos de votre Appareil</p>
+            <p>Nous utilisons ces informations pour fournir les fonctionnalités de notre Service, l'améliorer et le personnaliser. Les informations peuvent être téléchargées sur les serveurs de la Société et/ou sur le serveur d'un Prestataire de services, ou simplement stockées sur votre appareil.</p>
+            <p>Vous pouvez activer ou désactiver l'accès à ces informations à tout moment, via les paramètres de votre Appareil.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Utilisation de vos données personnelles</h2>
+        <p>La Société peut utiliser les Données personnelles aux fins suivantes :</p>
         <ul>
-            <li><strong>Consulter</strong> les informations enregistrées sur votre compte (onglet <em>Compte</em> dans l'application).</li>
-            <li><strong>Corriger</strong> vos informations personnelles (bouton <em>Modifier</em> dans le profil).</li>
-            <li><strong>Supprimer</strong> votre compte et vos données personnelles associées, directement depuis l'application (<em>Compte → Supprimer mon compte</em>).</li>
-            <li><strong>Vous opposer</strong> à un traitement, ou <strong>retirer votre consentement</strong> pour les notifications push et la géolocalisation.</li>
-            <li><strong>Obtenir une copie</strong> de vos données dans un format lisible, sur demande à contact@babashop.store.</li>
-            <li><strong>Introduire une réclamation</strong> auprès de l'Instance Nationale de Protection des Données Personnelles (INPDP) en Tunisie, ou de la CNIL si vous résidez en France.</li>
+            <li><strong>Pour fournir et maintenir notre Service</strong>, y compris pour surveiller l'utilisation de notre Service.</li>
+            <li><strong>Pour gérer votre Compte :</strong> pour gérer votre inscription en tant qu'utilisateur du Service. Les Données personnelles que vous fournissez peuvent vous donner accès à différentes fonctionnalités du Service qui vous sont disponibles en tant qu'utilisateur enregistré.</li>
+            <li><strong>Pour l'exécution d'un contrat :</strong> le développement, la conformité et l'exécution du contrat d'achat des produits, articles ou services que vous avez achetés ou de tout autre contrat avec nous via le Service.</li>
+            <li><strong>Pour vous contacter :</strong> pour vous contacter par e-mail, appels téléphoniques, SMS ou autres formes équivalentes de communication électronique, telles que les notifications push d'une application mobile concernant les mises à jour ou les communications informatives liées aux fonctionnalités, produits ou services contractés, y compris les mises à jour de sécurité, lorsque cela est nécessaire ou raisonnable pour leur mise en œuvre.</li>
+            <li><strong>Pour vous fournir des actualités, des offres spéciales et des informations générales</strong> sur d'autres biens, services et événements que nous proposons, similaires à ceux que vous avez déjà achetés ou dont vous vous êtes enquis, sauf si vous avez choisi de ne pas recevoir ces informations.</li>
+            <li><strong>Pour gérer vos demandes :</strong> pour prendre en charge et gérer vos demandes auprès de nous.</li>
+            <li><strong>Pour les transferts d'entreprise :</strong> nous pouvons utiliser vos informations pour évaluer ou réaliser une fusion, une cession, une restructuration, une réorganisation, une dissolution ou toute autre vente ou transfert d'une partie ou de la totalité de nos actifs, que ce soit en tant qu'entreprise en activité ou dans le cadre d'une faillite, d'une liquidation ou d'une procédure similaire, dans laquelle les Données personnelles détenues par nous concernant les utilisateurs de notre Service font partie des actifs transférés.</li>
+            <li><strong>À d'autres fins :</strong> nous pouvons utiliser vos informations à d'autres fins, telles que l'analyse de données, l'identification des tendances d'utilisation, la détermination de l'efficacité de nos campagnes promotionnelles et pour évaluer et améliorer notre Service, nos produits, nos services, notre marketing et votre expérience.</li>
         </ul>
-        <p style="margin-top: 16px;">La suppression de compte est effective sous 72 heures après confirmation. Les données de commande passées sont, elles, conservées de manière <strong>anonymisée</strong> (nom remplacé par « Compte supprimé », téléphone et adresse effacés) pour respecter la durée légale de conservation des documents comptables.</p>
+
+        <p style="margin-top: 16px;">Nous pouvons partager vos informations personnelles dans les situations suivantes :</p>
+        <ul>
+            <li><strong>Avec les Prestataires de services :</strong> nous pouvons partager vos informations personnelles avec les Prestataires de services pour surveiller et analyser l'utilisation de notre Service, et pour vous contacter.</li>
+            <li><strong>Pour les transferts d'entreprise :</strong> nous pouvons partager ou transférer vos informations personnelles dans le cadre, ou lors des négociations, de toute fusion, vente d'actifs de la Société, financement ou acquisition de tout ou partie de notre activité par une autre société.</li>
+            <li><strong>Avec les Affiliés :</strong> nous pouvons partager vos informations avec nos affiliés, auquel cas nous exigerons de ces affiliés qu'ils respectent la présente Politique de confidentialité. Les affiliés comprennent notre société mère et toute autre filiale, partenaires de coentreprise ou autres sociétés que nous contrôlons ou qui sont sous contrôle commun avec nous.</li>
+            <li><strong>Avec des partenaires commerciaux :</strong> nous pouvons partager vos informations avec nos partenaires commerciaux pour vous proposer certains produits, services ou promotions.</li>
+            <li><strong>Avec d'autres utilisateurs :</strong> lorsque vous partagez des informations personnelles ou interagissez d'une autre manière dans les espaces publics avec d'autres utilisateurs, ces informations peuvent être vues par tous les utilisateurs et être distribuées publiquement à l'extérieur.</li>
+            <li><strong>Avec votre consentement :</strong> nous pouvons divulguer vos informations personnelles à toute autre fin avec votre consentement.</li>
+        </ul>
     </section>
 
     <section>
-        <h2>5. Qui d'autre voit vos données</h2>
-        <p>Nous partageons le strict minimum, avec un nombre restreint de prestataires nécessaires au fonctionnement du service :</p>
-
-        <div class="datacard">
-            <div class="datacard-title">Prestataire de paiement</div>
-            <p>Si vous choisissez le paiement par carte bancaire, la transaction est traitée par MyFatoorah, prestataire agréé. Nous ne stockons jamais vos données de carte : elles transitent uniquement entre votre appareil et le prestataire, via une connexion chiffrée.</p>
-        </div>
-
-        <div class="datacard">
-            <div class="datacard-title">Notifications push</div>
-            <p>Google Firebase Cloud Messaging achemine les notifications techniques (statut de commande). Aucune donnée personnelle n'est incluse dans le contenu du message.</p>
-        </div>
-
-        <div class="datacard">
-            <div class="datacard-title">Livraison</div>
-            <p>Vos nom, téléphone, adresse et gouvernorat sont transmis au livreur affecté à votre commande, uniquement pour la durée de la livraison.</p>
-        </div>
-
-        <div class="datacard">
-            <div class="datacard-title">Hébergement</div>
-            <p>L'ensemble de nos serveurs est hébergé en Europe, opéré par nous-mêmes. Aucun sous-traitant cloud tiers (AWS, Google Cloud, Azure) ne détient une copie de nos bases de données.</p>
-        </div>
-
-        <p style="margin-top: 16px;">Aucun partage avec des annonceurs, régies publicitaires, courtiers en données, ou entreprises de scoring.</p>
+        <h2>Conservation de vos données personnelles</h2>
+        <p>La Société ne conservera vos Données personnelles que le temps nécessaire aux fins énoncées dans la présente Politique de confidentialité. Nous conserverons et utiliserons vos Données personnelles dans la mesure nécessaire pour respecter nos obligations légales (par exemple, si nous sommes tenus de conserver vos données pour respecter les lois applicables), résoudre les litiges et faire respecter nos accords et politiques juridiques.</p>
+        <p>La Société conservera également les Données d'utilisation à des fins d'analyse interne. Les Données d'utilisation sont généralement conservées pendant une période plus courte, sauf lorsque ces données sont utilisées pour renforcer la sécurité ou améliorer les fonctionnalités de notre Service, ou lorsque nous sommes légalement obligés de conserver ces données pendant des périodes plus longues.</p>
     </section>
 
     <section>
-        <h2>6. Sécurité et durée de conservation</h2>
-        <p>Les échanges entre l'application et nos serveurs sont chiffrés en TLS 1.2 minimum. Les codes OTP sont à usage unique et expirent après 5 minutes. Les mots de passe n'existent pas (l'authentification est passwordless), donc aucun risque de fuite de mot de passe.</p>
-        <p>Vos données de compte sont conservées tant que votre compte est actif. Les données de commande sont anonymisées à la suppression du compte, mais l'entête comptable est conservé 10 ans, conformément aux obligations fiscales tunisiennes.</p>
+        <h2>Transfert de vos données personnelles</h2>
+        <p>Vos informations, y compris les Données personnelles, sont traitées dans les bureaux d'exploitation de la Société et dans tous les autres lieux où se trouvent les parties impliquées dans le traitement. Cela signifie que ces informations peuvent être transférées vers — et conservées sur — des ordinateurs situés en dehors de votre État, province, pays ou autre juridiction gouvernementale où les lois sur la protection des données peuvent différer de celles de votre juridiction.</p>
+        <p>Votre consentement à la présente Politique de confidentialité, suivi de votre soumission de ces informations, représente votre accord pour ce transfert.</p>
+        <p>La Société prendra toutes les mesures raisonnablement nécessaires pour garantir que vos données sont traitées de manière sécurisée et conformément à la présente Politique de confidentialité, et aucun transfert de vos Données personnelles n'aura lieu vers une organisation ou un pays à moins que des contrôles adéquats ne soient en place, y compris la sécurité de vos données et d'autres informations personnelles.</p>
     </section>
 
     <section>
-        <h2>7. Enfants</h2>
-        <p>Babashop n'est pas destinée aux personnes de moins de 13 ans. Nous ne collectons pas sciemment de données concernant les mineurs. Si vous êtes parent ou tuteur et pensez qu'un enfant nous a communiqué des informations, écrivez-nous à contact@babashop.store : nous supprimerons le compte concerné sous 48 heures.</p>
+        <h2>Supprimer vos données personnelles</h2>
+        <p>Vous avez le droit de supprimer ou de demander que nous vous aidions à supprimer les Données personnelles que nous avons collectées à votre sujet.</p>
+        <p>Notre Service peut vous donner la possibilité de supprimer certaines informations vous concernant depuis le Service.</p>
+        <p>Vous pouvez mettre à jour, modifier ou supprimer vos informations à tout moment en vous connectant à votre Compte, si vous en avez un, et en visitant la section des paramètres du compte qui vous permet de gérer vos informations personnelles. Vous pouvez également nous contacter pour demander l'accès, la correction ou la suppression de toute information personnelle que vous nous avez fournie.</p>
+        <p>Veuillez toutefois noter que nous pouvons être amenés à conserver certaines informations lorsque nous avons une obligation légale ou une base légale pour le faire.</p>
     </section>
 
     <section>
-        <h2>8. Évolutions de cette politique</h2>
-        <p>Nous pouvons ajuster cette politique lorsque nous ajoutons de nouvelles fonctionnalités ou lorsqu'un cadre légal évolue. La date en tête de page reflète la dernière révision. En cas de changement significatif touchant vos droits, nous vous en informerons par e-mail et via une bannière dans l'application, au moins 15 jours avant la prise d'effet.</p>
+        <h2>Divulgation de vos données personnelles</h2>
+
+        <h3>Transactions commerciales</h3>
+        <p>Si la Société est impliquée dans une fusion, une acquisition ou une vente d'actifs, vos Données personnelles peuvent être transférées. Nous vous préviendrons avant que vos Données personnelles ne soient transférées et ne deviennent soumises à une Politique de confidentialité différente.</p>
+
+        <h3>Application de la loi</h3>
+        <p>Dans certaines circonstances, la Société peut être tenue de divulguer vos Données personnelles si la loi l'exige ou en réponse à des demandes valides émanant des autorités publiques (par exemple, un tribunal ou une agence gouvernementale).</p>
+
+        <h3>Autres exigences légales</h3>
+        <p>La Société peut divulguer vos Données personnelles en croyant de bonne foi qu'une telle action est nécessaire pour :</p>
+        <ul>
+            <li>Respecter une obligation légale</li>
+            <li>Protéger et défendre les droits ou la propriété de la Société</li>
+            <li>Prévenir ou enquêter sur d'éventuels actes répréhensibles liés au Service</li>
+            <li>Protéger la sécurité personnelle des Utilisateurs du Service ou du public</li>
+            <li>Protéger contre la responsabilité juridique</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Sécurité de vos données personnelles</h2>
+        <p>La sécurité de vos Données personnelles est importante pour nous, mais rappelez-vous qu'aucune méthode de transmission sur Internet, ni aucune méthode de stockage électronique n'est sécurisée à 100 %. Bien que nous nous efforcions d'utiliser des moyens commercialement acceptables pour protéger vos Données personnelles, nous ne pouvons garantir leur sécurité absolue.</p>
+    </section>
+
+    <section>
+        <h2>Confidentialité des enfants</h2>
+        <p>Notre Service ne s'adresse à personne âgée de moins de 13 ans. Nous ne collectons pas sciemment d'informations personnellement identifiables auprès de personnes âgées de moins de 13 ans. Si vous êtes un parent ou un tuteur et que vous savez que votre enfant nous a fourni des Données personnelles, veuillez nous contacter. Si nous apprenons que nous avons collecté des Données personnelles auprès d'une personne âgée de moins de 13 ans sans vérification du consentement parental, nous prenons des mesures pour supprimer ces informations de nos serveurs.</p>
+        <p>Si nous devons nous baser sur le consentement comme base légale pour traiter vos informations et que votre pays exige le consentement d'un parent, nous pouvons exiger le consentement de votre parent avant de collecter et d'utiliser ces informations.</p>
+    </section>
+
+    <section>
+        <h2>Liens vers d'autres sites web</h2>
+        <p>Notre Service peut contenir des liens vers d'autres sites web qui ne sont pas exploités par nous. Si vous cliquez sur un lien tiers, vous serez dirigé vers le site de ce tiers. Nous vous conseillons vivement de consulter la Politique de confidentialité de chaque site que vous visitez.</p>
+        <p>Nous n'avons aucun contrôle sur et n'assumons aucune responsabilité quant au contenu, aux politiques de confidentialité ou aux pratiques des sites ou services tiers.</p>
+    </section>
+
+    <section>
+        <h2>Modifications de cette politique de confidentialité</h2>
+        <p>Nous pouvons mettre à jour notre Politique de confidentialité de temps à autre. Nous vous informerons de tout changement en publiant la nouvelle Politique de confidentialité sur cette page.</p>
+        <p>Nous vous en informerons par e-mail et/ou par un avis bien visible sur notre Service, avant que le changement ne devienne effectif, et mettrons à jour la date de « Dernière mise à jour » en haut de cette Politique de confidentialité.</p>
+        <p>Il vous est conseillé de consulter périodiquement cette Politique de confidentialité pour tout changement. Les modifications apportées à la présente Politique de confidentialité entrent en vigueur dès leur publication sur cette page.</p>
     </section>
 
     <div class="contact">
-        <h2>Nous joindre</h2>
-        <p style="margin-bottom: 20px;">Pour toute question, demande d'accès, de rectification, de suppression ou de portabilité, un seul point de contact :</p>
+        <h2>Nous contacter</h2>
+        <p style="margin-bottom: 20px;">Si vous avez des questions concernant cette Politique de confidentialité, vous pouvez nous contacter :</p>
         <div class="contact-line"><span class="contact-label">E-mail</span> <a href="mailto:contact@babashop.store">contact@babashop.store</a></div>
-        <div class="contact-line"><span class="contact-label">Support</span> <a href="mailto:support@babashop.store">support@babashop.store</a></div>
-        <div class="contact-line"><span class="contact-label">Site web</span> <a href="https://babashop.store">babashop.store</a></div>
-        <div class="contact-line"><span class="contact-label">Adresse</span> <span>Tunis, Tunisie</span></div>
-        <p style="margin-top: 16px; font-size: 14px; color: var(--ink-muted);">Nous répondons à toute demande relative aux données personnelles sous 30 jours maximum, conformément au RGPD.</p>
     </div>
 
     <div class="foot">
-        <p>Ce document a été rédigé spécifiquement pour Babashop. Il n'utilise aucun modèle générique de générateur en ligne et ne s'applique qu'à cette application.</p>
-        <p style="margin-top: 8px;">© Babashop 2026 — Toute reproduction interdite sans accord préalable.</p>
+        <p>© 2026 Babashop. Tous droits réservés.</p>
     </div>
 
 </div>
