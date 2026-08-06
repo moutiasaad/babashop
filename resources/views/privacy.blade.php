@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="index,follow">
-    <title>Politique de confidentialité — Babashop</title>
+    <title>Politique de confidentialité — ShaiebExpo</title>
 
-    <meta name="description" content="Comment Babashop collecte, utilise et protège vos données personnelles. Rédigée pour les clients en Tunisie, conforme à la Loi organique 2004-63 et au RGPD.">
+    <meta name="description" content="Comment ShaiebExpo collecte, utilise et protège vos données personnelles. Rédigée pour les clients en Tunisie, conforme à la Loi organique 2004-63 et au RGPD.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Politique de confidentialité — Babashop">
+    <meta property="og:title" content="Politique de confidentialité — ShaiebExpo">
     <meta property="og:description" content="Nos engagements sur vos données : ce qu'on collecte, pourquoi, avec qui on partage, et comment vous reprenez la main quand vous le souhaitez.">
-    <meta property="og:site_name" content="Babashop">
+    <meta property="og:site_name" content="ShaiebExpo">
     <meta property="og:url" content="https://babashop.store/privacy-policy">
     <link rel="canonical" href="https://babashop.store/privacy-policy">
 
@@ -175,9 +175,9 @@
 <body>
 <div class="wrap">
 
-    <div class="brand">babashop.</div>
+    <div class="brand">ShaiebExpo</div>
     <div class="kicker">Politique de confidentialité</div>
-    <h1>Politique de confidentialité de Babashop</h1>
+    <h1>Politique de confidentialité de ShaiebExpo</h1>
     <p class="updated">Dernière mise à jour : 3 août 2026</p>
 
     <div class="tldr">
@@ -196,8 +196,8 @@
         <ul>
             <li><strong>Compte</strong> désigne un compte unique créé pour vous donner accès à notre Service ou à des parties de notre Service.</li>
             <li><strong>Affilié</strong> désigne une entité qui contrôle, est contrôlée par ou est sous contrôle commun avec une partie, où « contrôle » signifie la propriété de 50 % ou plus des actions, participations ou autres titres donnant droit de vote pour l'élection des administrateurs ou d'une autre autorité de gestion.</li>
-            <li><strong>Application</strong> fait référence à Babashop, le programme logiciel fourni par la Société.</li>
-            <li><strong>Société</strong> (désignée soit par « la Société », « Nous », « Notre » ou « Nos » dans le présent accord) fait référence à Babashop.</li>
+            <li><strong>Application</strong> fait référence à ShaiebExpo, le programme logiciel fourni par la Société.</li>
+            <li><strong>Société</strong> (désignée soit par « la Société », « Nous », « Notre » ou « Nos » dans le présent accord) fait référence à ShaiebExpo.</li>
             <li><strong>Pays</strong> fait référence à : Tunisie</li>
             <li><strong>Appareil</strong> désigne tout appareil pouvant accéder au Service, tel qu'un ordinateur, un téléphone portable ou une tablette numérique.</li>
             <li><strong>Données personnelles</strong> désigne toute information se rapportant à une personne identifiée ou identifiable.</li>
@@ -337,7 +337,7 @@
     </div>
 
     <div class="foot">
-        <p>© 2026 Babashop. Tous droits réservés.</p>
+        <p>© 2026 ShaiebExpo. Tous droits réservés.</p>
     </div>
 
 </div>

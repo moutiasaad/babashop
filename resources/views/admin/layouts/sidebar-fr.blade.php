@@ -3,7 +3,7 @@
         <div class="header_top border-bottom px_16" style="background:#eff3fd;">
             <div class="py_8 text-center">
                 <a class="d-inline-block" href="#">
-                    <h3 style="color:#B4442A; margin: 0; font-weight: 600;">Babashop</h3>
+                    <h3 style="color:#B4442A; margin: 0; font-weight: 600;">ShaiebExpo</h3>
                 </a>
             </div>
             <button class="btn header_tglBtn fs_16 d-xl-none" type="button">

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="index,follow">
-    <title>Babashop — L'artisanat tunisien, livré chez vous</title>
+    <title>ShaiebExpo — L'artisanat tunisien, livré chez vous</title>
 
-    <meta name="description" content="Babashop rassemble les artisans et marques tunisiennes sur une seule application. Bijoux, décoration, cosmétique, maroquinerie — livrés dans les 24 gouvernorats, paiement à la livraison.">
+    <meta name="description" content="ShaiebExpo rassemble les artisans et marques tunisiennes sur une seule application. Bijoux, décoration, cosmétique, maroquinerie — livrés dans les 24 gouvernorats, paiement à la livraison.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Babashop — L'artisanat tunisien, livré chez vous">
+    <meta property="og:title" content="ShaiebExpo — L'artisanat tunisien, livré chez vous">
     <meta property="og:description" content="Découvrez la sélection curated d'artisans et de marques tunisiennes. Livraison dans les 24 gouvernorats. Paiement à la livraison.">
-    <meta property="og:site_name" content="Babashop">
+    <meta property="og:site_name" content="ShaiebExpo">
     <meta property="og:url" content="https://babashop.store">
     <link rel="canonical" href="https://babashop.store">
 
@@ -287,7 +287,7 @@
 <body>
 
 <nav>
-    <a href="/" class="brand">babashop<span class="brand-dot">.</span></a>
+    <a href="/" class="brand">ShaiebExpo</a>
     <div class="nav-links">
         <a href="#features">Fonctionnalités</a>
         <a href="#how">Comment ça marche</a>
@@ -326,7 +326,7 @@
 </div>
 
 <section id="features">
-    <div class="section-kicker">Ce que Babashop apporte</div>
+    <div class="section-kicker">Ce que ShaiebExpo apporte</div>
     <h2>Pensé pour la Tunisie,<br>fait pour vous.</h2>
     <div class="features">
         <div class="feature">
@@ -387,7 +387,7 @@
 <section>
     <div class="callout">
         <h2>Prêt à essayer ?</h2>
-        <p>Téléchargez Babashop gratuitement et commandez votre premier produit local en quelques minutes.</p>
+        <p>Téléchargez ShaiebExpo gratuitement et commandez votre premier produit local en quelques minutes.</p>
         <div class="stores">
             <a href="#" class="store-btn" aria-label="App Store">
                 <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -414,7 +414,7 @@
 <footer>
     <div class="footer-inner">
         <div>
-            <div class="footer-brand">babashop<span class="brand-dot">.</span></div>
+            <div class="footer-brand">ShaiebExpo</div>
             <p class="footer-tagline">
                 Marketplace pour l'artisanat et les marques tunisiennes.
                 Livraison dans les 24 gouvernorats. Paiement à la livraison.
@@ -439,7 +439,7 @@
             </div>
         </div>
     </div>
-    <div class="footer-bottom">© 2026 Babashop — Tous droits réservés.</div>
+    <div class="footer-bottom">© 2026 ShaiebExpo — Tous droits réservés.</div>
 </footer>
 
 </body>

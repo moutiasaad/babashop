@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Votre code Babashop</title>
+    <title>Votre code ShaiebExpo</title>
 </head>
 <body style="font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f5f5; padding: 24px; margin: 0; color: #1a1a1a;">
     <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width: 480px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
         <tr>
             <td style="text-align: center; padding-bottom: 24px; border-bottom: 1px solid #eee;">
-                <h1 style="margin: 0; font-size: 24px; font-weight: 700;">Babashop</h1>
+                <h1 style="margin: 0; font-size: 24px; font-weight: 700;">ShaiebExpo</h1>
             </td>
         </tr>
         <tr>

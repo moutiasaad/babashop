@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Support — Babashop</title>
+    <title>Support — ShaiebExpo</title>
 
-    <meta name="description" content="Centre d'aide Babashop : FAQ (commandes, livraison, paiement, retours), contact e-mail et formulaire de support pour la Tunisie.">
+    <meta name="description" content="Centre d'aide ShaiebExpo : FAQ (commandes, livraison, paiement, retours), contact e-mail et formulaire de support pour la Tunisie.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Support — Babashop">
-    <meta property="og:site_name" content="Babashop">
+    <meta property="og:title" content="Support — ShaiebExpo">
+    <meta property="og:site_name" content="ShaiebExpo">
     <link rel="canonical" href="https://babashop.store/support">
 
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -236,12 +236,12 @@
 <body>
 
 <nav>
-    <a href="/" class="brand">babashop<span class="brand-dot">.</span></a>
+    <a href="/" class="brand">ShaiebExpo</a>
 </nav>
 
 <div class="wrap">
 
-    <div class="kicker">Support Babashop</div>
+    <div class="kicker">Support ShaiebExpo</div>
     <h1>Une question ? On répond.</h1>
     <p class="lede">
         Trouvez la réponse à votre question dans la FAQ ci-dessous, ou écrivez-nous
@@ -337,7 +337,7 @@
             <span class="faq-toggle">+</span>
         </div>
         <div class="faq-answer">
-            Babashop utilise une authentification par <strong>code à usage unique par e-mail</strong>.
+            ShaiebExpo utilise une authentification par <strong>code à usage unique par e-mail</strong>.
             Saisissez votre adresse e-mail, recevez un code à 6 chiffres, et connectez-vous. Aucun
             mot de passe à créer ni à retenir. Le code expire au bout de 5 minutes.
         </div>
@@ -430,7 +430,7 @@
     </div>
 
     <div class="foot">
-        <span>© 2026 Babashop</span>
+        <span>© 2026 ShaiebExpo</span>
         <span>
             <a href="/">Accueil</a>&nbsp;·&nbsp;
             <a href="/privacy-policy">Confidentialité</a>&nbsp;·&nbsp;

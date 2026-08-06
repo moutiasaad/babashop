@@ -21,7 +21,7 @@ class OtpMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Votre code de vérification Babashop',
+            subject: 'Votre code de vérification ShaiebExpo',
         );
     }
 
